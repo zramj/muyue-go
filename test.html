@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>沐閱｜追蹤測試頁</title>
+
+  <style>
+    :root{
+      --bg1:#0b0f1a; --bg2:#0f1627;
+      --stroke:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+      --shadow:0 18px 45px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; padding:22px;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(160,180,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(255,220,170,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:flex; align-items:center; justify-content:center;
+    }
+    .wrap{width:min(560px, 100%)}
+    .card{
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .top{padding:20px 22px 14px;border-bottom:1px solid var(--stroke)}
+    h1{margin:0;font-size:18px;letter-spacing:.6px}
+    p{margin:8px 0 0;color:var(--muted);line-height:1.7;font-size:14px}
+    .body{padding:16px 22px 22px}
+    .btns{display:grid;gap:10px}
+    a.btn{
+      text-decoration:none;
+      display:flex; align-items:center; justify-content:center;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      font-size:14px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    a.btn:hover{
+      transform: translateY(-1px);
+      background:rgba(255,255,255,.12);
+      border-color:rgba(255,255,255,.18);
+    }
+    .hint{
+      margin-top:14px;
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+      line-height:1.6;
+    }
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <h1>沐閱｜追蹤測試頁</h1>
+        <p>按下面任一顆按鈕，會模擬不同入口（IG / Threads / EDM）帶 UTM 進入口頁。</p>
+      </div>
+
+      <div class="body">
+        <div class="btns">
+          <a class="btn" id="ig" href="#">模擬 IG Bio 入口</a>
+          <a class="btn" id="threads" href="#">模擬 Threads Bio 入口</a>
+          <a class="btn" id="edm" href="#">模擬 電子報（EDM）入口</a>
+        </div>
+
+        <div class="hint">
+          下一步：進入口頁後，請再按「前往賣貨便下單」→ 會走 <code>go.html</code> → GA4 應該會看到事件 <code>click_to_myship</code>。<br/>
+          測試頁網址：<code>/test.html</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 入口頁（你的 index.html 在根目錄時，就是這個）
+    const ENTRY_URL = "https://zramj.github.io/muyue-go/";
+
+    function buildUrl({ source, medium, campaign, content }) {
+      const u = new URL(ENTRY_URL);
+      u.searchParams.set("utm_source", source);
+      u.searchParams.set("utm_medium", medium);
+      u.searchParams.set("utm_campaign", campaign);
+      u.searchParams.set("utm_content", content);
+      return u.toString();
+    }
+
+    // 三顆按鈕分別導向帶 UTM 的入口頁
+    document.getElementById("ig").href = buildUrl({
+      source: "instagram",
+      medium: "social",
+      campaign: "entry_test",
+      content: "bio_button"
+    });
+
+    document.getElementById("threads").href = buildUrl({
+      source: "threads",
+      medium: "social",
+      campaign: "entry_test",
+      content: "bio_button"
+    });
+
+    document.getElementById("edm").href = buildUrl({
+      source: "newsletter",
+      medium: "email",
+      campaign: "edm_test",
+      content: "button"
+    });
+  </script>
+</body>
+</html>
