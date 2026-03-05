@@ -3,23 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+    <title>Google Analytics 4 Measurement</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-XXXXXXXXX-X');
+        gtag('config', 'G-35XNCDDN0B', {
+            'page_path': window.location.pathname + window.location.search
+        });
+
+        // Set up custom events tracking
+        function trackEvent(eventName, eventParams) {
+            gtag('event', eventName, eventParams);
+        }
+
+        // Example of tracking a button click
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.getElementById('track-button');
+            button.addEventListener('click', function() {
+                trackEvent('button_click', {event_category: 'engagement', event_label: 'Track Button'});
+            });
+        });
     </script>
 </head>
 <body>
-    <h1>Tracking your visit...</h1>
+    <div>
+        <h1>Welcome to My Page</h1>
+        <button id="track-button">Track This Button!</button>
+        <div id="loading-animation" style="display:none;">Loading...</div>
+    </div>
+
+    <a id="fallback-link" href="https://www.example.com">If the tracking fails, click here!</a>
+
     <script>
-        // Redirect after a set timeout
-        setTimeout(function() {
-            window.location.href = 'https://www.targeturl.com';
-        }, 2000); // Redirect after 2 seconds
+        // Show loading animation while the page is loading
+        document.getElementById('loading-animation').style.display = 'block';
+        window.addEventListener('load', function() {
+            document.getElementById('loading-animation').style.display = 'none';
+        });
     </script>
 </body>
 </html>
