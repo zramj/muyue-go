@@ -71,68 +71,62 @@
     <div class="card">
       <div class="top">
         <h1>沐閱｜追蹤測試頁</h1>
-        <p>按下面任一顆按鈕，會模擬不同入口（IG / Threads / EDM）帶 UTM 進入口頁。</p>
+        <p>三顆按鈕分別模擬：IG Bio、Threads Bio、EDM → 用清楚的 utm_content 命名。</p>
       </div>
 
       <div class="body">
         <div class="btns">
-          <a class="btn" id="ig" href="#" target="_blank">模擬 IG Bio 入口</a>
-          <a class="btn" id="threads" href="#" target="_blank">模擬 Threads Bio 入口</a>
-          <a class="btn" id="edm" href="#" target="_blank">模擬 電子報（EDM）入口</a>
+          <a class="btn" id="ig" href="#">模擬 IG Bio 入口（utm_content=ig_bio）</a>
+          <a class="btn" id="threads" href="#">模擬 Threads Bio 入口（utm_content=threads_bio）</a>
+          <a class="btn" id="edm" href="#">模擬 EDM 入口（直接 go.html，utm_content=edm_button）</a>
         </div>
 
         <div class="hint">
-          下一步：進入口頁後，請再按「前往賣貨便下單」→ 會走 <code>go.html</code> → GA4 應該會看到事件 <code>click_to_myship</code>。<br/>
-          測試頁網址：<code>/test.html</code>
+          IG/Threads：會先進 <code>/</code>（index.html）再由入口頁按鈕去 <code>go.html</code>。<br/>
+          EDM：直接進 <code>go.html</code> → 跳賣貨便。<br/>
+          你最後在 GA4 看 <code>click_to_myship</code> → <code>utm_source</code> / <code>utm_content</code> 拆分即可。
         </div>
       </div>
     </div>
   </div>
 
-    <script>
-        const ENTRY_URL = "https://zramj.github.io/muyue-go/";
-        const GO_URL = "https://zramj.github.io/muyue-go/go.html";
+  <script>
+    // 入口頁（index.html 在根目錄就是這個）
+    const ENTRY_URL = "https://zramj.github.io/muyue-go/";
+    // 跳轉追蹤頁
+    const GO_URL = "https://zramj.github.io/muyue-go/go.html";
 
-        function buildEntryUrl({ source, medium, campaign, content }) {
-            const u = new URL(ENTRY_URL);
-            u.searchParams.set("utm_source", source);
-            u.searchParams.set("utm_medium", medium);
-            u.searchParams.set("utm_campaign", campaign);
-            u.searchParams.set("utm_content", content);
-            return u.toString();
-        }
+    function buildUrl(base, { source, medium, campaign, content }) {
+      const u = new URL(base);
+      u.searchParams.set("utm_source", source);
+      u.searchParams.set("utm_medium", medium);
+      u.searchParams.set("utm_campaign", campaign);
+      u.searchParams.set("utm_content", content);
+      return u.toString();
+    }
 
-        function buildGoUrl({ source, medium, campaign, content }) {
-            const u = new URL(GO_URL);
-            u.searchParams.set("utm_source", source);
-            u.searchParams.set("utm_medium", medium);
-            u.searchParams.set("utm_campaign", campaign);
-            u.searchParams.set("utm_content", content);
-            return u.toString();
-        }
+    // IG / Threads：先進入口頁（index.html）
+    document.getElementById("ig").href = buildUrl(ENTRY_URL, {
+      source: "instagram",
+      medium: "social",
+      campaign: "entry_test",
+      content: "ig_bio"
+    });
 
-        // IG / Threads：先進入口頁（index.html）
-        document.getElementById("ig").href = buildEntryUrl({
-            source: "instagram",
-            medium: "social",
-            campaign: "entry_test",
-            content: "bio_button"
-        });
+    document.getElementById("threads").href = buildUrl(ENTRY_URL, {
+      source: "threads",
+      medium: "social",
+      campaign: "entry_test",
+      content: "threads_bio"
+    });
 
-        document.getElementById("threads").href = buildEntryUrl({
-            source: "threads",
-            medium: "social",
-            campaign: "entry_test",
-            content: "bio_button"
-        });
-
-        // EDM：直接進 go.html（不進入口頁）
-        document.getElementById("edm").href = buildGoUrl({
-            source: "newsletter",
-            medium: "email",
-            campaign: "edm_test",
-            content: "button"
-        });
-    </script>
+    // EDM：直接進 go.html（不經入口頁）
+    document.getElementById("edm").href = buildUrl(GO_URL, {
+      source: "newsletter",
+      medium: "email",
+      campaign: "edm_test",
+      content: "edm_button"
+    });
+  </script>
 </body>
 </html>
