@@ -3,8 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="robots" content="noindex,nofollow" />
-  <title>沐閱 MUYUE｜入口</title>
+
+  <!-- SEO -->
+  <title>沐閱 MUYUE｜閱讀系香氛蠟燭</title>
+  <meta name="description" content="沐閱 MUYUE｜手作香氛 × 閱讀儀式。香氛蠟燭與閱讀靜心時光。可在此訂閱電子報，獲得新品與開賣通知。" />
+  <link rel="canonical" href="https://zramj.github.io/muyue-go/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="沐閱 MUYUE" />
+  <meta property="og:title" content="沐閱 MUYUE｜閱讀系香氛蠟燭" />
+  <meta property="og:description" content="手作香氛 × 閱讀儀式。香氛蠟燭與閱讀靜心時光。訂閱電子報獲得新品與開賣通知。" />
+  <meta property="og:url" content="https://zramj.github.io/muyue-go/" />
+  <meta property="og:image" content="https://zramj.github.io/muyue-go/banner.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
@@ -18,7 +28,6 @@
   <style>
     :root{
       --bg1:#0b0f1a; --bg2:#0f1627;
-      --card:rgba(255,255,255,.06);
       --stroke:rgba(255,255,255,.12);
       --text:rgba(255,255,255,.92);
       --muted:rgba(255,255,255,.68);
@@ -37,7 +46,7 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
       display:flex; align-items:center; justify-content:center;
     }
-    .wrap{width:min(520px, 100%)}
+    .wrap{width:min(560px, 100%)}
     .card{
       border:1px solid var(--stroke);
       border-radius:var(--radius);
@@ -46,8 +55,8 @@
       backdrop-filter: blur(10px);
       overflow:hidden;
     }
-    .header{padding:22px 22px 14px; border-bottom:1px solid var(--stroke)}
-    .brand{display:flex; align-items:center; gap:14px}
+    .header{padding:22px 22px 16px; border-bottom:1px solid var(--stroke)}
+    .brand{display:flex; align-items:flex-start; gap:14px}
     .avatar{
       width:76px; height:76px; border-radius:999px;
       border:1px solid var(--stroke);
@@ -64,34 +73,76 @@
     }
     h1{margin:0; font-size:18px; letter-spacing:.6px}
     .bio{margin:8px 0 0; color:var(--muted); font-size:14px; line-height:1.75}
-    .body{padding:16px 22px 22px}
-
-    .grid{display:grid; gap:10px}
-    a.btn, button.btn{
-      width:100%;
-      text-decoration:none;
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--stroke);
+    .social-icons{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .icon-btn{
+      width:38px; height:38px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
       background:rgba(255,255,255,.06);
-      color:var(--text);
-      font-size:14px;
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:grid; place-items:center;
+      transition: transform .14s ease, background .14s ease, border-color .14s ease;
     }
-    a.btn:hover, button.btn:hover{
-      transform: translateY(-1px);
+    .icon-btn:hover{
+      transform: translateY(-1px) scale(1.04);
       background:rgba(255,255,255,.10);
-      border-color:rgba(255,255,255,.18);
+      border-color:rgba(255,255,255,.22);
     }
-    .primary{background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.22);}
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    @media (max-width:420px){ .row{grid-template-columns:1fr} }
+    .icon-btn img{
+      width:18px; height:18px; object-fit:contain;
+      opacity:.95;
+    }
+    .body{padding:16px 22px 22px}
+    .grid{display:grid; gap:12px}
+
+    /* Banner CTA */
+    .banner{
+      display:block;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      box-shadow: 0 14px 30px rgba(0,0,0,.20);
+      transition: transform .14s ease, border-color .14s ease, background .14s ease;
+      text-decoration:none;
+      color:inherit;
+    }
+    .banner:hover{
+      transform: translateY(-1px);
+      border-color:rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+    }
+    .banner img{
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      display:block;
+      background:linear-gradient(90deg, rgba(255,255,255,.12), rgba(160,180,255,.14));
+    }
+    .banner .banner-text{
+      padding:12px 14px 14px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .banner .banner-text b{font-size:14px; letter-spacing:.3px}
+    .banner .banner-text span{font-size:12px; color:var(--muted)}
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.12);
+      font-size:12px;
+      color:rgba(255,255,255,.82);
+      white-space:nowrap;
+    }
 
     .panel{
-      margin-top:8px;
-      border:1px solid var(--stroke);
+      margin-top:2px;
+      border:1px solid rgba(255,255,255,.12);
       border-radius:18px;
       padding:14px;
       background:rgba(0,0,0,.10);
@@ -99,56 +150,39 @@
     .panel b{display:block; font-size:13px; margin-bottom:8px}
     .panel p{margin:0; color:var(--muted); font-size:13px; line-height:1.7}
 
-    .note{
-      margin-top:10px;
-      color:var(--muted2);
-      font-size:12px;
-      line-height:1.6;
-    }
+    /* Benchmark embed */
+    .benchmark-embed{margin-top:10px; border-radius:14px; overflow:hidden;}
+    .benchmark-embed iframe{width:100% !important; border:0 !important; min-height:240px;}
+    .note{margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.6;}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(0,0,0,.12);
-      color:var(--muted);
-      font-size:12px;
-      margin-top:10px;
-      max-width:100%;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
 
-    /* ===== Benchmark Email Embed 美化：讓表單更「融入」你的版面 ===== */
-    .benchmark-embed{
-      margin-top:10px;
+    /* Admin-only block */
+    .admin-only{display:none; margin-top:10px;}
+    .admin-box{
+      border:1px dashed rgba(255,255,255,.20);
       border-radius:14px;
-      overflow:hidden;
-    }
-    /* Benchmark 常見會注入 iframe 或 form，這裡用寬度/邊框統一一下 */
-    .benchmark-embed iframe{
-      width:100% !important;
-      border:0 !important;
-      min-height:240px; /* 若你的表單較長可再加 */
-    }
-    .benchmark-noscript{
-      padding-top:8px;
+      padding:10px 12px;
+      background:rgba(0,0,0,.18);
+      color:rgba(255,255,255,.75);
       font-size:12px;
-      color:rgba(255,255,255,.55);
-      line-height:1.6;
+      line-height:1.65;
     }
-    .benchmark-noscript a{
-      color:rgba(255,255,255,.65);
-      text-decoration:none;
-      border-bottom:1px solid rgba(255,255,255,.25);
-    }
-    .benchmark-noscript a:hover{
-      color:rgba(255,255,255,.85);
-      border-bottom-color:rgba(255,255,255,.45);
-    }
+    .admin-box code{color:rgba(255,255,255,.9)}
   </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"沐閱 MUYUE",
+    "url":"https://zramj.github.io/muyue-go/",
+    "sameAs":[
+      "https://www.instagram.com/mu.yue.art/",
+      "https://www.threads.net/@mu.yue.art"
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -157,50 +191,81 @@
       <div class="header">
         <div class="brand">
           <div class="avatar" id="avatar">
-            <!-- 你有 LOGO 圖的話，填 LOGO_URL 後會自動顯示 -->
-            <img id="avatarImg" alt="MUYUE logo" />
+            <img id="avatarImg" alt="沐閱 MUYUE 品牌 Logo" />
             <div class="fallback" id="fallbackMoon" aria-hidden="true"></div>
           </div>
-          <div>
+
+          <div style="flex:1 1 auto;">
             <h1>沐閱 MUYUE</h1>
             <p class="bio">
               手作香氛 × 閱讀儀式。<br/>
               世界很吵，但這裡很安靜。
             </p>
-            <!-- <div class="pill mono" id="srcPill">來源：載入中…</div> -->
+
+            <!-- Social icons -->
+            <div class="social-icons" aria-label="社群連結">
+              <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+                <img id="igIcon" alt="Instagram" />
+              </a>
+              <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener" aria-label="Threads">
+                <img id="threadsIcon" alt="Threads" />
+              </a>
+            </div>
+
+            <!-- Admin-only info (only visible with ?admin=1) -->
+            <div class="admin-only" id="adminOnly">
+              <div class="admin-box">
+                <div><b>Admin / Debug</b></div>
+                <div>utm_source: <code id="dbg_source"></code></div>
+                <div>utm_medium: <code id="dbg_medium"></code></div>
+                <div>utm_campaign: <code id="dbg_campaign"></code></div>
+                <div>utm_content: <code id="dbg_content"></code></div>
+                <div style="margin-top:6px;">go_url: <code id="dbg_go"></code></div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
       <div class="body">
         <div class="grid">
-          <!-- 主要 CTA：去賣貨便（經 go.html 追蹤後跳轉） -->
-          <a class="btn primary" id="btnBuy" href="#">前往賣貨便下單</a>
+          <!-- Banner CTA: goes to go.html with carried UTM -->
+          <a class="banner" id="btnBuy" href="#">
+            <img id="bannerImg" alt="沐閱｜前往賣貨便下單" />
+            <div class="banner-text">
+              <div>
+                <b>前往賣貨便下單</b><br/>
+                <span>試香包 / 正品｜點一下就跳轉</span>
+              </div>
+              <div class="chip">立即前往</div>
+            </div>
+          </a>
 
-          <!-- 社群按鈕 -->
-          <div class="row">
-            <a class="btn" id="btnIG" href="#" target="_blank" rel="noopener">Instagram</a>
-            <a class="btn" id="btnThreads" href="#" target="_blank" rel="noopener">Threads</a>
-          </div>
-
-          <!-- ✅ 訂閱（接 Benchmark Email 真表單） -->
+          <!-- Subscription -->
           <div class="panel">
             <b>訂閱電子報</b>
             <p>我會偶爾寄一封：香氣、閱讀、與一點點生活的安放。</p>
 
             <div class="benchmark-embed" id="benchmarkSignup">
-                <!-- BEGIN: Benchmark Email Signup Form Code -->
-                <script type="text/javascript" id="lbscript1782335" src="https://lb.benchmarkemail.com/tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script><noscript>Please enable JavaScript <br /><div align="center" style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;"><a href="https://www.benchmarkemail.com/email-marketing?utm_source=usersignupforms&utm_medium=customers&utm_campaign=usersignupforms" target="_new" style="text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">Email Marketing </a> by Benchmark</div></noscript>
-                <!-- END: Benchmark Email Signup Form Code -->
+              <!-- BEGIN: Benchmark Email Signup Form Code -->
+              <script type="text/javascript" id="lbscript1782335" src="https://lb.benchmarkemail.com/tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script>
+              <noscript>Please enable JavaScript <br />
+                <div align="center" style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">
+                  <a href="https://www.benchmarkemail.com/email-marketing?utm_source=usersignupforms&utm_medium=customers&utm_campaign=usersignupforms"
+                     target="_new"
+                     style="text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">Email Marketing</a>
+                  by Benchmark
+                </div>
+              </noscript>
+              <!-- END: Benchmark Email Signup Form Code -->
             </div>
 
-            <!-- <div class="note" id="subNote">
-              訂閱表單由 Benchmark Email 提供。送出成功後，你會留在同頁或依 Benchmark 表單設定顯示成功訊息。
-            </div> -->
+            <!-- <div class="note">送出後會依 Benchmark 表單設定顯示成功訊息或導頁。</div> -->
           </div>
 
           <!-- <div class="note">
-            追蹤說明：你只要在 IG/Threads/EDM 貼「帶 UTM 的入口連結」，GA4 就能知道使用者從哪裡來，並追到「去賣貨便」點擊。
+            <span class="mono">Tip：</span>IG / Threads 入口請貼入口頁（/）帶 UTM；EDM 請直接貼 go.html 帶 UTM。
           </div> -->
         </div>
       </div>
@@ -208,11 +273,16 @@
   </div>
 
   <script>
-    // ========= 你可以改的設定 =========
-    const LOGO_URL = ""; // <- 放你的 LOGO 圖片網址（https://...png/jpg），沒有就留空
-    const IG_URL = "https://www.instagram.com/mu.yue.art/";       // <- 改成你的 IG
-    const THREADS_URL = "https://www.threads.net/@mu.yue.art";    // <- 改成你的 Threads（沒有就先留）
-    const GO_HTML = "https://zramj.github.io/muyue-go/go.html";    // 你的 go.html
+    // ========= 你只要改這裡（檔名放 repo 根目錄即可） =========
+    const LOGO_FILENAME = "logo.png";        // 例：logo.png / logo.jpg / logo.svg
+    const BANNER_FILENAME = "banner.jpg";    // 例：banner.jpg
+    const IG_ICON_FILENAME = "icon-ig.svg";  // 例：icon-ig.png 或 icon-ig.svg
+    const THREADS_ICON_FILENAME = "icon-threads.svg"; // 例：icon-threads.png 或 icon-threads.svg
+
+    // ========= 固定設定 =========
+    const IG_URL = "https://www.instagram.com/mu.yue.art/";
+    const THREADS_URL = "https://www.threads.net/@mu.yue.art";
+    const GO_HTML = "https://zramj.github.io/muyue-go/go.html";
 
     // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
     const qs = new URLSearchParams(location.search);
@@ -220,39 +290,49 @@
     const utm_medium   = qs.get("utm_medium")   || "(none)";
     const utm_campaign = qs.get("utm_campaign") || "(none)";
     const utm_content  = qs.get("utm_content")  || "(none)";
+    const is_admin = qs.get("admin") === "1";
 
-    // UI 顯示來源
-    document.getElementById("srcPill").textContent = `來源：${utm_source} / ${utm_medium}`;
+    // Assets (auto apply by filename)
+    const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
+    const setImg = (el, filename, fallbackSvg) => {
+      if (!el || !filename) return;
+      el.src = base + filename;
+      el.onerror = () => {
+        if (fallbackSvg) {
+          el.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(fallbackSvg);
+        }
+      };
+    };
 
-    // LOGO 顯示
-    const img = document.getElementById("avatarImg");
+    // Logo
+    const avatarImg = document.getElementById("avatarImg");
     const moon = document.getElementById("fallbackMoon");
-    if (LOGO_URL) {
-      img.src = LOGO_URL;
-      img.style.display = "block";
+    if (LOGO_FILENAME) {
+      setImg(avatarImg, LOGO_FILENAME, null);
+      avatarImg.style.display = "block";
       moon.style.display = "none";
     }
 
-    // 社群連結
+    // Social icons (fallback SVG if missing)
+    const igIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="white" opacity=".85"/><path d="M12 8.2a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6Z" stroke="white" opacity=".85"/><path d="M17.6 6.6h.01" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>`;
+    const threadsIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M7.2 7.2c.8-1.8 2.6-3 4.8-3 2.6 0 4.7 1.6 5.3 3.8" stroke="white" opacity=".85" stroke-linecap="round"/><path d="M6.2 12c0-3.2 2.6-5.8 5.8-5.8 3.3 0 6 2.6 6 5.8 0 3.3-2.7 6-6 6-3.2 0-5.8-2.7-5.8-6Z" stroke="white" opacity=".85"/><path d="M10 12.5c1 .9 3 .9 4 0" stroke="white" opacity=".85" stroke-linecap="round"/></svg>`;
+    setImg(document.getElementById("igIcon"), IG_ICON_FILENAME, igIconSvg);
+    setImg(document.getElementById("threadsIcon"), THREADS_ICON_FILENAME, threadsIconSvg);
+
+    // Social links
     const btnIG = document.getElementById("btnIG");
     const btnThreads = document.getElementById("btnThreads");
     btnIG.href = IG_URL;
     btnThreads.href = THREADS_URL;
 
-    // 入口頁事件（可選，但我建議保留：你能算入口頁→下單點擊率）
-    if (typeof gtag === "function") {
-      gtag("event", "entry_view", {
-        utm_source, utm_medium, utm_campaign, utm_content,
-        page_path: location.pathname
-      });
-    }
-
-    // 把入口的 UTM 原封不動帶去 go.html（go.html 會送 click_to_myship，再跳賣貨便）
+    // Build go.html URL with carried UTM
     const goUrl = new URL(GO_HTML);
     [["utm_source",utm_source],["utm_medium",utm_medium],["utm_campaign",utm_campaign],["utm_content",utm_content]]
       .forEach(([k,v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
 
-    // 主要「賣貨便」按鈕
+    // Banner image & click target
+    setImg(document.getElementById("bannerImg"), BANNER_FILENAME, null);
+
     const btnBuy = document.getElementById("btnBuy");
     btnBuy.href = goUrl.toString();
     btnBuy.addEventListener("click", () => {
@@ -264,27 +344,26 @@
       }
     }, { passive: true });
 
-    // 社群按鈕點擊事件（可選）
-    btnIG.addEventListener("click", () => {
-      if (typeof gtag === "function") {
-        gtag("event", "entry_click_social", {
-          platform: "instagram",
-          utm_source, utm_medium, utm_campaign, utm_content
-        });
-      }
-    }, { passive: true });
+    // Entry view event
+    if (typeof gtag === "function") {
+      gtag("event", "entry_view", {
+        utm_source, utm_medium, utm_campaign, utm_content,
+        page_path: location.pathname
+      });
+    }
 
-    btnThreads.addEventListener("click", () => {
-      if (typeof gtag === "function") {
-        gtag("event", "entry_click_social", {
-          platform: "threads",
-          utm_source, utm_medium, utm_campaign, utm_content
-        });
-      }
-    }, { passive: true });
+    // Admin-only block
+    if (is_admin) {
+      const adminOnly = document.getElementById("adminOnly");
+      adminOnly.style.display = "block";
+      document.getElementById("dbg_source").textContent = utm_source;
+      document.getElementById("dbg_medium").textContent = utm_medium;
+      document.getElementById("dbg_campaign").textContent = utm_campaign;
+      document.getElementById("dbg_content").textContent = utm_content;
+      document.getElementById("dbg_go").textContent = goUrl.toString();
+    }
 
-    // ✅ 訂閱互動追蹤（Benchmark 表單可能是 iframe/script 注入，不一定抓得到 submit）
-    // 先用「互動事件」確保你至少能知道有沒有人點開/開始填
+    // Subscribe tracking
     const signup = document.getElementById("benchmarkSignup");
     if (signup) {
       let fired = false;
@@ -299,7 +378,6 @@
         }
       }, { passive: true });
 
-      // 若 Benchmark 不是 iframe，而是直接注入 form，這段可抓到 submit（抓得到就更準）
       document.addEventListener("submit", (e) => {
         const t = e.target;
         if (t && signup.contains(t)) {

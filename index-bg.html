@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>沐閱 MUYUE｜入口</title>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-35XNCDDN0B', { anonymize_ip: true });
+  </script>
+
+  <style>
+    :root{
+      --bg1:#0b0f1a; --bg2:#0f1627;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+      --muted2:rgba(255,255,255,.50);
+      --shadow:0 18px 45px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; padding:22px;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(160,180,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(255,220,170,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:flex; align-items:center; justify-content:center;
+    }
+    .wrap{width:min(520px, 100%)}
+    .card{
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .header{padding:22px 22px 14px; border-bottom:1px solid var(--stroke)}
+    .brand{display:flex; align-items:center; gap:14px}
+    .avatar{
+      width:76px; height:76px; border-radius:999px;
+      border:1px solid var(--stroke);
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,.04));
+      display:grid; place-items:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:none;}
+    .fallback{
+      width:32px; height:32px; border-radius:50%;
+      box-shadow: -10px 0 0 0 rgba(255,255,255,.88);
+      opacity:.95;
+    }
+    h1{margin:0; font-size:18px; letter-spacing:.6px}
+    .bio{margin:8px 0 0; color:var(--muted); font-size:14px; line-height:1.75}
+    .body{padding:16px 22px 22px}
+
+    .grid{display:grid; gap:10px}
+    a.btn, button.btn{
+      width:100%;
+      text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    a.btn:hover, button.btn:hover{
+      transform: translateY(-1px);
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.18);
+    }
+    .primary{background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.22);}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width:420px){ .row{grid-template-columns:1fr} }
+
+    .panel{
+      margin-top:8px;
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      padding:14px;
+      background:rgba(0,0,0,.10);
+    }
+    .panel b{display:block; font-size:13px; margin-bottom:8px}
+    .panel p{margin:0; color:var(--muted); font-size:13px; line-height:1.7}
+
+    .note{
+      margin-top:10px;
+      color:var(--muted2);
+      font-size:12px;
+      line-height:1.6;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,.12);
+      color:var(--muted);
+      font-size:12px;
+      margin-top:10px;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    /* ===== Benchmark Email Embed 美化：讓表單更「融入」你的版面 ===== */
+    .benchmark-embed{
+      margin-top:10px;
+      border-radius:14px;
+      overflow:hidden;
+    }
+    /* Benchmark 常見會注入 iframe 或 form，這裡用寬度/邊框統一一下 */
+    .benchmark-embed iframe{
+      width:100% !important;
+      border:0 !important;
+      min-height:240px; /* 若你的表單較長可再加 */
+    }
+    .benchmark-noscript{
+      padding-top:8px;
+      font-size:12px;
+      color:rgba(255,255,255,.55);
+      line-height:1.6;
+    }
+    .benchmark-noscript a{
+      color:rgba(255,255,255,.65);
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,.25);
+    }
+    .benchmark-noscript a:hover{
+      color:rgba(255,255,255,.85);
+      border-bottom-color:rgba(255,255,255,.45);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="brand">
+          <div class="avatar" id="avatar">
+            <!-- 你有 LOGO 圖的話，填 LOGO_URL 後會自動顯示 -->
+            <img id="avatarImg" alt="MUYUE logo" />
+            <div class="fallback" id="fallbackMoon" aria-hidden="true"></div>
+          </div>
+          <div>
+            <h1>沐閱 MUYUE</h1>
+            <p class="bio">
+              手作香氛 × 閱讀儀式。<br/>
+              世界很吵，但這裡很安靜。
+            </p>
+            <!-- <div class="pill mono" id="srcPill">來源：載入中…</div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="grid">
+          <!-- 主要 CTA：去賣貨便（經 go.html 追蹤後跳轉） -->
+          <a class="btn primary" id="btnBuy" href="#">前往賣貨便下單</a>
+
+          <!-- 社群按鈕 -->
+          <div class="row">
+            <a class="btn" id="btnIG" href="#" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn" id="btnThreads" href="#" target="_blank" rel="noopener">Threads</a>
+          </div>
+
+          <!-- ✅ 訂閱（接 Benchmark Email 真表單） -->
+          <div class="panel">
+            <b>訂閱電子報</b>
+            <p>我會偶爾寄一封：香氣、閱讀、與一點點生活的安放。</p>
+
+            <div class="benchmark-embed" id="benchmarkSignup">
+                <!-- BEGIN: Benchmark Email Signup Form Code -->
+                <script type="text/javascript" id="lbscript1782335" src="https://lb.benchmarkemail.com/tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script><noscript>Please enable JavaScript <br /><div align="center" style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;"><a href="https://www.benchmarkemail.com/email-marketing?utm_source=usersignupforms&utm_medium=customers&utm_campaign=usersignupforms" target="_new" style="text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">Email Marketing </a> by Benchmark</div></noscript>
+                <!-- END: Benchmark Email Signup Form Code -->
+            </div>
+
+            <!-- <div class="note" id="subNote">
+              訂閱表單由 Benchmark Email 提供。送出成功後，你會留在同頁或依 Benchmark 表單設定顯示成功訊息。
+            </div> -->
+          </div>
+
+          <!-- <div class="note">
+            追蹤說明：你只要在 IG/Threads/EDM 貼「帶 UTM 的入口連結」，GA4 就能知道使用者從哪裡來，並追到「去賣貨便」點擊。
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========= 你可以改的設定 =========
+    const LOGO_URL = ""; // <- 放你的 LOGO 圖片網址（https://...png/jpg），沒有就留空
+    const IG_URL = "https://www.instagram.com/mu.yue.art/";       // <- 改成你的 IG
+    const THREADS_URL = "https://www.threads.net/@mu.yue.art";    // <- 改成你的 Threads（沒有就先留）
+    const GO_HTML = "https://zramj.github.io/muyue-go/go.html";    // 你的 go.html
+
+    // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
+    const qs = new URLSearchParams(location.search);
+    const utm_source   = qs.get("utm_source")   || "(none)";
+    const utm_medium   = qs.get("utm_medium")   || "(none)";
+    const utm_campaign = qs.get("utm_campaign") || "(none)";
+    const utm_content  = qs.get("utm_content")  || "(none)";
+
+    // UI 顯示來源
+    document.getElementById("srcPill").textContent = `來源：${utm_source} / ${utm_medium}`;
+
+    // LOGO 顯示
+    const img = document.getElementById("avatarImg");
+    const moon = document.getElementById("fallbackMoon");
+    if (LOGO_URL) {
+      img.src = LOGO_URL;
+      img.style.display = "block";
+      moon.style.display = "none";
+    }
+
+    // 社群連結
+    const btnIG = document.getElementById("btnIG");
+    const btnThreads = document.getElementById("btnThreads");
+    btnIG.href = IG_URL;
+    btnThreads.href = THREADS_URL;
+
+    // 入口頁事件（可選，但我建議保留：你能算入口頁→下單點擊率）
+    if (typeof gtag === "function") {
+      gtag("event", "entry_view", {
+        utm_source, utm_medium, utm_campaign, utm_content,
+        page_path: location.pathname
+      });
+    }
+
+    // 把入口的 UTM 原封不動帶去 go.html（go.html 會送 click_to_myship，再跳賣貨便）
+    const goUrl = new URL(GO_HTML);
+    [["utm_source",utm_source],["utm_medium",utm_medium],["utm_campaign",utm_campaign],["utm_content",utm_content]]
+      .forEach(([k,v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
+
+    // 主要「賣貨便」按鈕
+    const btnBuy = document.getElementById("btnBuy");
+    btnBuy.href = goUrl.toString();
+    btnBuy.addEventListener("click", () => {
+      if (typeof gtag === "function") {
+        gtag("event", "entry_click_buy", {
+          utm_source, utm_medium, utm_campaign, utm_content,
+          destination: GO_HTML
+        });
+      }
+    }, { passive: true });
+
+    // 社群按鈕點擊事件（可選）
+    btnIG.addEventListener("click", () => {
+      if (typeof gtag === "function") {
+        gtag("event", "entry_click_social", {
+          platform: "instagram",
+          utm_source, utm_medium, utm_campaign, utm_content
+        });
+      }
+    }, { passive: true });
+
+    btnThreads.addEventListener("click", () => {
+      if (typeof gtag === "function") {
+        gtag("event", "entry_click_social", {
+          platform: "threads",
+          utm_source, utm_medium, utm_campaign, utm_content
+        });
+      }
+    }, { passive: true });
+
+    // ✅ 訂閱互動追蹤（Benchmark 表單可能是 iframe/script 注入，不一定抓得到 submit）
+    // 先用「互動事件」確保你至少能知道有沒有人點開/開始填
+    const signup = document.getElementById("benchmarkSignup");
+    if (signup) {
+      let fired = false;
+      signup.addEventListener("click", () => {
+        if (fired) return;
+        fired = true;
+        if (typeof gtag === "function") {
+          gtag("event", "subscribe_form_interact", {
+            utm_source, utm_medium, utm_campaign, utm_content,
+            provider: "benchmarkemail"
+          });
+        }
+      }, { passive: true });
+
+      // 若 Benchmark 不是 iframe，而是直接注入 form，這段可抓到 submit（抓得到就更準）
+      document.addEventListener("submit", (e) => {
+        const t = e.target;
+        if (t && signup.contains(t)) {
+          if (typeof gtag === "function") {
+            gtag("event", "subscribe_submit", {
+              utm_source, utm_medium, utm_campaign, utm_content,
+              provider: "benchmarkemail"
+            });
+          }
+        }
+      }, true);
+    }
+  </script>
+</body>
+</html>
