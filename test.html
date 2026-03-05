@@ -89,41 +89,50 @@
     </div>
   </div>
 
-  <script>
-    // 入口頁（你的 index.html 在根目錄時，就是這個）
-    const ENTRY_URL = "https://zramj.github.io/muyue-go/";
+    <script>
+        const ENTRY_URL = "https://zramj.github.io/muyue-go/";
+        const GO_URL = "https://zramj.github.io/muyue-go/go.html";
 
-    function buildUrl({ source, medium, campaign, content }) {
-      const u = new URL(ENTRY_URL);
-      u.searchParams.set("utm_source", source);
-      u.searchParams.set("utm_medium", medium);
-      u.searchParams.set("utm_campaign", campaign);
-      u.searchParams.set("utm_content", content);
-      return u.toString();
-    }
+        function buildEntryUrl({ source, medium, campaign, content }) {
+            const u = new URL(ENTRY_URL);
+            u.searchParams.set("utm_source", source);
+            u.searchParams.set("utm_medium", medium);
+            u.searchParams.set("utm_campaign", campaign);
+            u.searchParams.set("utm_content", content);
+            return u.toString();
+        }
 
-    // 三顆按鈕分別導向帶 UTM 的入口頁
-    document.getElementById("ig").href = buildUrl({
-      source: "instagram",
-      medium: "social",
-      campaign: "entry_test",
-      content: "bio_button"
-    });
+        function buildGoUrl({ source, medium, campaign, content }) {
+            const u = new URL(GO_URL);
+            u.searchParams.set("utm_source", source);
+            u.searchParams.set("utm_medium", medium);
+            u.searchParams.set("utm_campaign", campaign);
+            u.searchParams.set("utm_content", content);
+            return u.toString();
+        }
 
-    document.getElementById("threads").href = buildUrl({
-      source: "threads",
-      medium: "social",
-      campaign: "entry_test",
-      content: "bio_button"
-    });
+        // IG / Threads：先進入口頁（index.html）
+        document.getElementById("ig").href = buildEntryUrl({
+            source: "instagram",
+            medium: "social",
+            campaign: "entry_test",
+            content: "bio_button"
+        });
 
-    // EDM：直接進 go.html（不進入口頁）
-    document.getElementById("edm").href = buildGoUrl({
-        source: "newsletter",
-        medium: "email",
-        campaign: "edm_test",
-        content: "button"
-    });
-  </script>
+        document.getElementById("threads").href = buildEntryUrl({
+            source: "threads",
+            medium: "social",
+            campaign: "entry_test",
+            content: "bio_button"
+        });
+
+        // EDM：直接進 go.html（不進入口頁）
+        document.getElementById("edm").href = buildGoUrl({
+            source: "newsletter",
+            medium: "email",
+            campaign: "edm_test",
+            content: "button"
+        });
+    </script>
 </body>
 </html>
