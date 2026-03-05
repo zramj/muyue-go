@@ -117,11 +117,12 @@
       content: "bio_button"
     });
 
-    document.getElementById("edm").href = buildUrl({
-      source: "newsletter",
-      medium: "email",
-      campaign: "edm_test",
-      content: "button"
+    // EDM：直接進 go.html（不進入口頁）
+    document.getElementById("edm").href = buildGoUrl({
+        source: "newsletter",
+        medium: "email",
+        campaign: "edm_test",
+        content: "button"
     });
   </script>
 </body>
