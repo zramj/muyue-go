@@ -1,48 +1,295 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Analytics 4 Measurement</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>沐閱｜前往賣貨便</title>
 
-        gtag('config', 'G-35XNCDDN0B', {
-            'page_path': window.location.pathname + window.location.search
-        });
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-35XNCDDN0B', {
+      send_page_view: true,
+      // 讓跳轉場景更穩：通常 GA4 會自動處理傳輸，這裡仍保留等待跳轉
+      anonymize_ip: true
+    });
+  </script>
 
-        // Set up custom events tracking
-        function trackEvent(eventName, eventParams) {
-            gtag('event', eventName, eventParams);
-        }
-
-        // Example of tracking a button click
-        document.addEventListener('DOMContentLoaded', function() {
-            const button = document.getElementById('track-button');
-            button.addEventListener('click', function() {
-                trackEvent('button_click', {event_category: 'engagement', event_label: 'Track Button'});
-            });
-        });
-    </script>
+  <style>
+    :root{
+      --bg1:#0b0f1a;
+      --bg2:#0f1627;
+      --card:#0f172a;
+      --stroke:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+      --muted2:rgba(255,255,255,.48);
+      --shadow:0 18px 45px rgba(0,0,0,.35);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(160,180,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(255,220,170,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+    }
+    .wrap{width:min(520px, 100%)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .top{
+      padding:22px 22px 14px;
+      border-bottom:1px solid var(--stroke);
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .mark{
+      width:42px;height:42px;border-radius:14px;
+      border:1px solid var(--stroke);
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.20), rgba(255,255,255,.04));
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .moon{
+      width:18px;height:18px;border-radius:50%;
+      box-shadow: -6px 0 0 0 rgba(255,255,255,.85);
+      opacity:.9;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+      gap:4px;
+    }
+    .title b{font-size:16px; letter-spacing:.5px}
+    .title span{font-size:13px; color:var(--muted)}
+    .body{padding:18px 22px 22px}
+    .msg{
+      font-size:15px;
+      line-height:1.65;
+      color:var(--text);
+      margin:0 0 14px;
+    }
+    .sub{
+      font-size:13px;
+      color:var(--muted2);
+      margin:0 0 16px;
+    }
+    .progress{
+      height:10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      overflow:hidden;
+      margin:14px 0 18px;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,255,255,.88), rgba(170,190,255,.88));
+      filter: drop-shadow(0 6px 18px rgba(180,200,255,.18));
+      transition: width .8s ease;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+    a.btn, button.btn{
+      appearance:none;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:14px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    a.btn:hover, button.btn:hover{
+      transform: translateY(-1px);
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.18);
+    }
+    .btn.primary{
+      background:rgba(255,255,255,.14);
+      border-color:rgba(255,255,255,.22);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,.12);
+      font-size:12px;
+      color:var(--muted);
+      margin-top:10px;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .tiny{font-size:12px;color:var(--muted2); margin-top:14px; line-height:1.5}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+  </style>
 </head>
+
 <body>
-    <div>
-        <h1>Welcome to My Page</h1>
-        <button id="track-button">Track This Button!</button>
-        <div id="loading-animation" style="display:none;">Loading...</div>
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div class="mark" aria-hidden="true"><div class="moon"></div></div>
+        <div class="title">
+          <b>沐閱｜正在前往賣貨便</b>
+          <span>把你的點擊記錄好，然後安靜地帶你去下單。</span>
+        </div>
+      </div>
+
+      <div class="body">
+        <p class="msg" id="msg">稍等一下，正在為你開路…</p>
+        <p class="sub" id="sub">若沒有自動跳轉，你可以按下方「立即前往」。</p>
+
+        <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+
+        <div class="actions">
+          <a class="btn primary" id="goNow" href="#" rel="noopener noreferrer">立即前往</a>
+          <button class="btn" id="copyLink" type="button">複製賣貨便連結</button>
+        </div>
+
+        <div class="pill mono" id="destPill" title=""></div>
+        <div class="tiny" id="tiny"></div>
+      </div>
     </div>
+  </div>
 
-    <a id="fallback-link" href="https://www.example.com">If the tracking fails, click here!</a>
+  <script>
+    // ========= 可調參數 =========
+    const MEASUREMENT_ID = "G-35XNCDDN0B";
+    const DEFAULT_DEST = "https://myship.7-11.com.tw/general/detail/GM2601242672761";
+    const REDIRECT_DELAY_MS = 800;   // 等待多久再跳轉（給 GA 送事件的時間）
+    const PROGRESS_TO = 92;          // 進度條停在幾%
 
-    <script>
-        // Show loading animation while the page is loading
-        document.getElementById('loading-animation').style.display = 'block';
-        window.addEventListener('load', function() {
-            document.getElementById('loading-animation').style.display = 'none';
-        });
-    </script>
+    // ========= 工具 =========
+    const qs = new URLSearchParams(location.search);
+
+    // 支援可選 dest 覆寫（你若未來有不同商品頁，可用 dest=... 但一般不需要）
+    // 安全起見：若 dest 不是 http(s) 就忽略
+    const destFromQS = qs.get("dest");
+    const isValidHttpUrl = (u) => {
+      try {
+        const x = new URL(u);
+        return x.protocol === "http:" || x.protocol === "https:";
+      } catch { return false; }
+    };
+    const DEST = (destFromQS && isValidHttpUrl(destFromQS)) ? destFromQS : DEFAULT_DEST;
+
+    // UTM（來源標籤）
+    const utm_source   = qs.get("utm_source")   || "(none)";
+    const utm_medium   = qs.get("utm_medium")   || "(none)";
+    const utm_campaign = qs.get("utm_campaign") || "(none)";
+    const utm_content  = qs.get("utm_content")  || "(none)";
+
+    // 額外資訊
+    const referrer = document.referrer || "(direct)";
+    const page_path = location.pathname;
+
+    // 避免重複送事件（例如某些 App 內建預覽、回上一頁再進來）
+    const onceKey = `muyue_sent_${utm_source}_${utm_medium}_${utm_campaign}_${utm_content}_${DEST}`;
+    const alreadySent = sessionStorage.getItem(onceKey) === "1";
+
+    // UI 綁定
+    const bar = document.getElementById("bar");
+    const goNow = document.getElementById("goNow");
+    const copyLink = document.getElementById("copyLink");
+    const destPill = document.getElementById("destPill");
+    const tiny = document.getElementById("tiny");
+
+    goNow.href = DEST;
+    destPill.textContent = `目的地：${DEST}`;
+    destPill.title = DEST;
+
+    tiny.innerHTML =
+      `來源：<span class="mono">${utm_source}</span> / <span class="mono">${utm_medium}</span>　` +
+      `活動：<span class="mono">${utm_campaign}</span>　` +
+      `位置：<span class="mono">${utm_content}</span>`;
+
+    // 進度條動畫
+    requestAnimationFrame(() => { bar.style.width = PROGRESS_TO + "%"; });
+
+    // 複製連結
+    copyLink.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(DEST);
+        copyLink.textContent = "已複製 ✓";
+        setTimeout(() => (copyLink.textContent = "複製賣貨便連結"), 1200);
+      } catch {
+        // 備援
+        const input = document.createElement("input");
+        input.value = DEST;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        document.body.removeChild(input);
+        copyLink.textContent = "已複製 ✓";
+        setTimeout(() => (copyLink.textContent = "複製賣貨便連結"), 1200);
+      }
+    });
+
+    // 送 GA4 事件（更準確：帶 referrer、path、dest、UTM）
+    function sendGAEvent() {
+      // 若 GA script 還沒載入，gtag 可能還在，但通常仍可 push 到 dataLayer
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "click_to_myship", {
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        utm_content,
+        referrer,
+        page_path,
+        destination: DEST,
+        transport_type: "beacon" // 提示使用 beacon（gtag 會自行決定）
+      });
+    }
+
+    if (!alreadySent) {
+      try {
+        sendGAEvent();
+        sessionStorage.setItem(onceKey, "1");
+      } catch {}
+    }
+
+    // 自動跳轉（仍保留立即前往按鈕做備援）
+    setTimeout(() => {
+      window.location.replace(DEST);
+    }, REDIRECT_DELAY_MS);
+  </script>
 </body>
 </html>
