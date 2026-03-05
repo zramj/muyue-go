@@ -99,20 +99,6 @@
     .panel b{display:block; font-size:13px; margin-bottom:8px}
     .panel p{margin:0; color:var(--muted); font-size:13px; line-height:1.7}
 
-    .subscribe{
-      display:flex; gap:10px; margin-top:10px;
-      flex-wrap:wrap;
-    }
-    .subscribe input{
-      flex:1 1 220px;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      outline:none;
-    }
-    .subscribe input::placeholder{color:rgba(255,255,255,.45)}
     .note{
       margin-top:10px;
       color:var(--muted2);
@@ -133,6 +119,34 @@
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
+    }
+
+    /* ===== Benchmark Email Embed 美化：讓表單更「融入」你的版面 ===== */
+    .benchmark-embed{
+      margin-top:10px;
+      border-radius:14px;
+      overflow:hidden;
+    }
+    /* Benchmark 常見會注入 iframe 或 form，這裡用寬度/邊框統一一下 */
+    .benchmark-embed iframe{
+      width:100% !important;
+      border:0 !important;
+      min-height:240px; /* 若你的表單較長可再加 */
+    }
+    .benchmark-noscript{
+      padding-top:8px;
+      font-size:12px;
+      color:rgba(255,255,255,.55);
+      line-height:1.6;
+    }
+    .benchmark-noscript a{
+      color:rgba(255,255,255,.65);
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,.25);
+    }
+    .benchmark-noscript a:hover{
+      color:rgba(255,255,255,.85);
+      border-bottom-color:rgba(255,255,255,.45);
     }
   </style>
 </head>
@@ -169,18 +183,29 @@
             <a class="btn" id="btnThreads" href="#" target="_blank" rel="noopener">Threads</a>
           </div>
 
-          <!-- 訂閱（先做假的） -->
+          <!-- ✅ 訂閱（接 Benchmark Email 真表單） -->
           <div class="panel">
-            <b>訂閱電子報（先做假的，之後再接真系統）</b>
+            <b>訂閱電子報</b>
             <p>我會偶爾寄一封：香氣、閱讀、與一點點生活的安放。</p>
 
-            <div class="subscribe">
-              <input id="email" type="email" placeholder="輸入 Email（暫不會真的送出）" />
-              <button class="btn" id="btnSubscribe" type="button">訂閱</button>
+            <div class="benchmark-embed" id="benchmarkSignup">
+              <!-- BEGIN: Benchmark Email Signup Form Code -->
+              <script type="text/javascript" id="lbscript1782335" src="https://lb.benchmarkemail.com//tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script>
+              <noscript>
+                <div class="benchmark-noscript">
+                  Please enable JavaScript<br />
+                  <div align="center" style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">
+                    <a href="https://www.benchmarkemail.com/email-marketing?utm_source=usersignupforms&utm_medium=customers&utm_campaign=usersignupforms" target="_new">
+                      Email Marketing
+                    </a> by Benchmark
+                  </div>
+                </div>
+              </noscript>
+              <!-- END: Benchmark Email Signup Form Code -->
             </div>
 
             <div class="note" id="subNote">
-              目前這個按鈕只會記錄「有人想訂閱」的點擊事件到 GA4（不會真的收信）。
+              訂閱表單由 Benchmark Email 提供。送出成功後，你會留在同頁或依 Benchmark 表單設定顯示成功訊息。
             </div>
           </div>
 
@@ -268,17 +293,35 @@
       }
     }, { passive: true });
 
-    // 訂閱（假的）：只送事件，不送資料
-    document.getElementById("btnSubscribe").addEventListener("click", () => {
-      const email = (document.getElementById("email").value || "").trim();
-      if (typeof gtag === "function") {
-        gtag("event", "entry_click_subscribe", {
-          utm_source, utm_medium, utm_campaign, utm_content,
-          has_email: email ? "yes" : "no"
-        });
-      }
-      document.getElementById("subNote").textContent = "已記錄：有人想訂閱（目前不會真的送出/收集 Email）。";
-    });
+    // ✅ 訂閱互動追蹤（Benchmark 表單可能是 iframe/script 注入，不一定抓得到 submit）
+    // 先用「互動事件」確保你至少能知道有沒有人點開/開始填
+    const signup = document.getElementById("benchmarkSignup");
+    if (signup) {
+      let fired = false;
+      signup.addEventListener("click", () => {
+        if (fired) return;
+        fired = true;
+        if (typeof gtag === "function") {
+          gtag("event", "subscribe_form_interact", {
+            utm_source, utm_medium, utm_campaign, utm_content,
+            provider: "benchmarkemail"
+          });
+        }
+      }, { passive: true });
+
+      // 若 Benchmark 不是 iframe，而是直接注入 form，這段可抓到 submit（抓得到就更準）
+      document.addEventListener("submit", (e) => {
+        const t = e.target;
+        if (t && signup.contains(t)) {
+          if (typeof gtag === "function") {
+            gtag("event", "subscribe_submit", {
+              utm_source, utm_medium, utm_campaign, utm_content,
+              provider: "benchmarkemail"
+            });
+          }
+        }
+      }, true);
+    }
   </script>
 </body>
 </html>
