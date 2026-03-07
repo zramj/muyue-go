@@ -445,15 +445,34 @@
         const EMAIL_ICON_FILENAME = "icon-email.svg";
         const GO_HTML = "https://zramj.github.io/muyue-go/go.html";
 
-        // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
+        
+        // ========= 讀取入口參數 =========
         const qs = new URLSearchParams(location.search);
+
+        // Clean link mapping: ?from=ig / ?from=th / ?from=edm → auto add UTM（不覆蓋既有 utm_*）
+        const from = (qs.get("from") || "").toLowerCase();
+        if (!qs.get("utm_source") && from) {
+            const map = {
+                ig:  { utm_source: "instagram",  utm_medium: "social", utm_campaign: "entry", utm_content: "ig_bio" },
+                th:  { utm_source: "threads",    utm_medium: "social", utm_campaign: "entry", utm_content: "threads_bio" },
+                edm: { utm_source: "newsletter", utm_medium: "email",  utm_campaign: "edm",   utm_content: "edm_button" }
+            };
+            const v = map[from];
+            if (v) {
+                qs.set("utm_source", v.utm_source);
+                qs.set("utm_medium", v.utm_medium);
+                qs.set("utm_campaign", v.utm_campaign);
+                qs.set("utm_content", v.utm_content);
+            }
+        }
+
+        // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
         const utm_source = qs.get("utm_source") || "(none)";
         const utm_medium = qs.get("utm_medium") || "(none)";
         const utm_campaign = qs.get("utm_campaign") || "(none)";
         const utm_content = qs.get("utm_content") || "(none)";
         const is_admin = qs.get("admin") === "1";
-
-        // Assets (auto apply by filename)
+// Assets (auto apply by filename)
         const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
         const setImg = (el, filename, fallbackSvg) => {
             if (!el || !filename) return;

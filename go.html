@@ -196,10 +196,27 @@
     const REDIRECT_DELAY_MS = 800;   // 等待多久再跳轉（給 GA 送事件的時間）
     const PROGRESS_TO = 92;          // 進度條停在幾%
 
+    
     // ========= 工具 =========
     const qs = new URLSearchParams(location.search);
 
-    // 支援可選 dest 覆寫（你若未來有不同商品頁，可用 dest=... 但一般不需要）
+    // Clean link mapping: ?from=ig / ?from=th / ?from=edm → auto add UTM（不覆蓋既有 utm_*）
+    const from = (qs.get("from") || "").toLowerCase();
+    if (!qs.get("utm_source") && from) {
+      const map = {
+        ig:  { utm_source: "instagram",  utm_medium: "social", utm_campaign: "entry", utm_content: "ig_bio" },
+        th:  { utm_source: "threads",    utm_medium: "social", utm_campaign: "entry", utm_content: "threads_bio" },
+        edm: { utm_source: "newsletter", utm_medium: "email",  utm_campaign: "edm",   utm_content: "edm_button" }
+      };
+      const v = map[from];
+      if (v) {
+        qs.set("utm_source", v.utm_source);
+        qs.set("utm_medium", v.utm_medium);
+        qs.set("utm_campaign", v.utm_campaign);
+        qs.set("utm_content", v.utm_content);
+      }
+    }
+// 支援可選 dest 覆寫（你若未來有不同商品頁，可用 dest=... 但一般不需要）
     // 安全起見：若 dest 不是 http(s) 就忽略
     const destFromQS = qs.get("dest");
     const isValidHttpUrl = (u) => {
