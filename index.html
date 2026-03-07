@@ -14,8 +14,15 @@
     <meta property="og:title" content="沐閱 MUYUE｜閱讀系香氛蠟燭" />
     <meta property="og:description" content="手作香氛 × 閱讀儀式。香氛蠟燭與閱讀靜心時光。訂閱電子報獲得新品與開賣通知。" />
     <meta property="og:url" content="https://zramj.github.io/muyue-go/" />
-    <meta property="og:image" content="https://zramj.github.io/muyue-go/banner.jpg" />
+    <meta property="og:image" content="https://zramj.github.io/muyue-go/banner.png" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
@@ -144,12 +151,6 @@
             transform: translateY(-1px) scale(1.04);
             background: rgba(255, 255, 255, .10);
             border-color: rgba(255, 255, 255, .22);
-        }
-
-        .icon-btn svg {
-            width: 18px;
-            height: 18px;
-            color: rgba(255, 255, 255, .92);
         }
 
         .icon-btn img {
@@ -345,44 +346,21 @@
 
                         <!-- Social icons -->
                         <div class="social-icons" aria-label="社群連結">
-                            <!-- Instagram -->
-                            <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener"
-                                aria-label="Instagram">
-                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z"
-                                        fill="none" stroke="currentColor" stroke-width="1.6" opacity=".92" />
-                                    <path d="M12 8.2a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6Z" fill="none"
-                                        stroke="currentColor" stroke-width="1.6" opacity=".92" />
-                                    <path d="M17.6 6.6h.01" stroke="currentColor" stroke-width="3"
-                                        stroke-linecap="round" opacity=".92" />
-                                </svg>
+                            <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+                                <img id="igIcon" alt="Instagram" />
                             </a>
-
-                            <!-- Facebook -->
-                            <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener"
-                                aria-label="Facebook">
-                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.4l.6-3H13V9c0-.6.4-1 1-1Z"
-                                        fill="currentColor" opacity=".92" />
-                                </svg>
+                            <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+                                <img id="fbIcon" alt="Facebook" />
                             </a>
-
-                            <!-- Threads -->
-                            <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener"
-                                aria-label="Threads">
-                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M7.2 7.2c.8-1.8 2.6-3 4.8-3 2.6 0 4.7 1.6 5.3 3.8" fill="none"
-                                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".92" />
-                                    <path
-                                        d="M6.2 12c0-3.2 2.6-5.8 5.8-5.8 3.3 0 6 2.6 6 5.8 0 3.3-2.7 6-6 6-3.2 0-5.8-2.7-5.8-6Z"
-                                        fill="none" stroke="currentColor" stroke-width="1.6" opacity=".92" />
-                                    <path d="M10 12.5c1 .9 3 .9 4 0" fill="none" stroke="currentColor"
-                                        stroke-width="1.6" stroke-linecap="round" opacity=".92" />
-                                </svg>
+                            <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener" aria-label="Threads">
+                                <img id="threadsIcon" alt="Threads" />
+                            </a>
+                            <a class="icon-btn" id="btnEmail" href="#" target="_blank" rel="noopener" aria-label="Email">
+                                <img id="emailIcon" alt="Email" />
                             </a>
                         </div>
 
-                        <!-- Admin-only info (only visible with ?admin=1) -->
+<!-- Admin-only info (only visible with ?admin=1) -->
                         <div class="admin-only" id="adminOnly">
                             <div class="admin-box">
                                 <div><b>Admin / Debug</b></div>
@@ -415,7 +393,7 @@
                     <!-- Subscription -->
                     <div class="panel">
                         <b>訂閱電子報</b>
-                        <p>我會偶爾寄一封：香氣、閱讀、與一點點生活的安放。</p>
+                        <p>我會偶爾寄一封：香氣、閱讀、與專屬給你的第一手消息，偶爾還會有一點點小驚喜。</p>
 
                         <div class="benchmark-embed" id="benchmarkSignup">
                             <!-- BEGIN: Benchmark Email Signup Form Code -->
@@ -454,14 +432,17 @@
     <script>
         // ========= 你只要改這裡（檔名放 repo 根目錄即可） =========
         const LOGO_FILENAME = "logo.png";        // 例：logo.png / logo.jpg / logo.svg
-        const BANNER_FILENAME = "banner.jpg";    // 例：banner.jpg
-        const IG_ICON_FILENAME = "icon-ig.svg";  // 例：icon-ig.png 或 icon-ig.svg
+        const BANNER_FILENAME = "banner.png";    // 例：banner.jpg
+        const IG_ICON_FILENAME = "icon-instagram.svg";  // 例：icon-ig.png 或 icon-ig.svg
         const THREADS_ICON_FILENAME = "icon-threads.svg"; // 例：icon-threads.png 或 icon-threads.svg
 
         // ========= 固定設定 =========
         const IG_URL = "https://www.instagram.com/mu.yue.art/";
         const THREADS_URL = "https://www.threads.net/@mu.yue.art";
-        const FB_URL = "#"; // TODO：換成你的 Facebook 專頁網址
+        const FB_URL = "https://www.facebook.com/profile.php?id=61586349880553"; // TODO：換成你的 Facebook 專頁網址
+        const FB_ICON_FILENAME = "icon-facebook.svg";
+        const EMAIL_ADDRESS = "mu.yue.art@gmail.com";
+        const EMAIL_ICON_FILENAME = "icon-email.svg";
         const GO_HTML = "https://zramj.github.io/muyue-go/go.html";
 
         // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
@@ -497,11 +478,25 @@
         const btnIG = document.getElementById("btnIG");
         const btnFB = document.getElementById("btnFB");
         const btnThreads = document.getElementById("btnThreads");
+        const btnEmail = document.getElementById("btnEmail");
         btnIG.href = IG_URL;
         if (btnFB) btnFB.href = FB_URL;
         btnThreads.href = THREADS_URL;
+        if (btnEmail) btnEmail.href = "mailto:" + EMAIL_ADDRESS;
 
-        // Build go.html URL with carried UTM
+        // Social icons images (use files in repo root)
+        const envelopeSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M4.5 7.5h15v9a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-9Z" stroke="white" opacity=".92" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="m5.2 8.1 6.2 5a1 1 0 0 0 1.2 0l6.2-5" stroke="white" opacity=".92" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+        setImg(document.getElementById("igIcon"), IG_ICON_FILENAME, null);
+        setImg(document.getElementById("threadsIcon"), THREADS_ICON_FILENAME, null);
+        setImg(document.getElementById("fbIcon"), FB_ICON_FILENAME, null);
+        setImg(document.getElementById("emailIcon"), EMAIL_ICON_FILENAME, envelopeSvg);
+
+
+
+// Build go.html URL with carried UTM
         const goUrl = new URL(GO_HTML);
         [["utm_source", utm_source], ["utm_medium", utm_medium], ["utm_campaign", utm_campaign], ["utm_content", utm_content]]
             .forEach(([k, v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
