@@ -346,21 +346,25 @@
 
                         <!-- Social icons -->
                         <div class="social-icons" aria-label="社群連結">
-                            <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+                            <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener"
+                                aria-label="Instagram">
                                 <img id="igIcon" alt="Instagram" />
                             </a>
-                            <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+                            <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener"
+                                aria-label="Facebook">
                                 <img id="fbIcon" alt="Facebook" />
                             </a>
-                            <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener" aria-label="Threads">
+                            <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener"
+                                aria-label="Threads">
                                 <img id="threadsIcon" alt="Threads" />
                             </a>
-                            <a class="icon-btn" id="btnEmail" href="#" target="_blank" rel="noopener" aria-label="Email">
+                            <a class="icon-btn" id="btnEmail" href="#" target="_blank" rel="noopener"
+                                aria-label="Email">
                                 <img id="emailIcon" alt="Email" />
                             </a>
                         </div>
 
-<!-- Admin-only info (only visible with ?admin=1) -->
+                        <!-- Admin-only info (only visible with ?admin=1) -->
                         <div class="admin-only" id="adminOnly">
                             <div class="admin-box">
                                 <div><b>Admin / Debug</b></div>
@@ -384,20 +388,20 @@
                         <div class="banner-text">
                             <div>
                                 <b>前往賣貨便下單</b><br />
-                                <span>限量試香組合包｜點這裡</span>
+                                <span>6/10 前免運｜點這裡前往購買</span>
                             </div>
                             <div class="chip">立即前往</div>
                         </div>
                     </a>
 
                     <!-- Subscription -->
-                    <div class="panel">
+                    <!-- <div class="panel">
                         <b>訂閱電子報</b>
                         <p>我會偶爾寄一封：香氣、閱讀、與專屬給你的第一手消息，偶爾還會有一點點小驚喜。</p>
 
-                        <div class="benchmark-embed" id="benchmarkSignup">
-                            <!-- BEGIN: Benchmark Email Signup Form Code -->
-                            <script type="text/javascript" id="lbscript1782335"
+                        <div class="benchmark-embed" id="benchmarkSignup"> -->
+                    <!-- BEGIN: Benchmark Email Signup Form Code -->
+                    <!-- <script type="text/javascript" id="lbscript1782335"
                                 src="https://lb.benchmarkemail.com/tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script>
                             <noscript>Please enable JavaScript <br />
                                 <div align="center"
@@ -408,12 +412,12 @@
                                         Marketing</a>
                                     by Benchmark
                                 </div>
-                            </noscript>
-                            <!-- END: Benchmark Email Signup Form Code -->
-                        </div>
+                            </noscript> -->
+                    <!-- END: Benchmark Email Signup Form Code -->
+                    <!-- </div> -->
 
-                        <!-- <div class="note">送出後會依 Benchmark 表單設定顯示成功訊息或導頁。</div> -->
-                    </div>
+                    <!-- <div class="note">送出後會依 Benchmark 表單設定顯示成功訊息或導頁。</div> -->
+                    <!-- </div> -->
 
                     <!-- <div class="note">
                 <span class="mono">Tip：</span>IG / Threads 入口請貼入口頁（/）帶 UTM；EDM 請直接貼 go.html 帶 UTM。
@@ -431,8 +435,8 @@
 
     <script>
         // ========= 你只要改這裡（檔名放 repo 根目錄即可） =========
-        const LOGO_FILENAME = "logo.png";        // 例：logo.png / logo.jpg / logo.svg
-        const BANNER_FILENAME = "banner.png";    // 例：banner.jpg
+        const LOGO_FILENAME = "logo-1.png";        // 例：logo.png / logo.jpg / logo.svg
+        const BANNER_FILENAME = "banner-1.png";    // 例：banner.jpg
         const IG_ICON_FILENAME = "icon-instagram.svg";  // 例：icon-ig.png 或 icon-ig.svg
         const THREADS_ICON_FILENAME = "icon-threads.svg"; // 例：icon-threads.png 或 icon-threads.svg
 
@@ -445,7 +449,7 @@
         const EMAIL_ICON_FILENAME = "icon-email.svg";
         const GO_HTML = "https://zramj.github.io/muyue-go/go.html";
 
-        
+
         // ========= 讀取入口參數 =========
         const qs = new URLSearchParams(location.search);
 
@@ -453,9 +457,9 @@
         const from = (qs.get("from") || "").toLowerCase();
         if (!qs.get("utm_source") && from) {
             const map = {
-                ig:  { utm_source: "instagram",  utm_medium: "social", utm_campaign: "entry", utm_content: "ig_bio" },
-                th:  { utm_source: "threads",    utm_medium: "social", utm_campaign: "entry", utm_content: "threads_bio" },
-                edm: { utm_source: "newsletter", utm_medium: "email",  utm_campaign: "edm",   utm_content: "edm_button" }
+                ig: { utm_source: "instagram", utm_medium: "social", utm_campaign: "entry", utm_content: "ig_bio" },
+                th: { utm_source: "threads", utm_medium: "social", utm_campaign: "entry", utm_content: "threads_bio" },
+                edm: { utm_source: "newsletter", utm_medium: "email", utm_campaign: "edm", utm_content: "edm_button" }
             };
             const v = map[from];
             if (v) {
@@ -472,7 +476,7 @@
         const utm_campaign = qs.get("utm_campaign") || "(none)";
         const utm_content = qs.get("utm_content") || "(none)";
         const is_admin = qs.get("admin") === "1";
-// Assets (auto apply by filename)
+        // Assets (auto apply by filename)
         const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
         const setImg = (el, filename, fallbackSvg) => {
             if (!el || !filename) return;
@@ -515,7 +519,7 @@
 
 
 
-// Build go.html URL with carried UTM
+        // Build go.html URL with carried UTM
         const goUrl = new URL(GO_HTML);
         [["utm_source", utm_source], ["utm_medium", utm_medium], ["utm_campaign", utm_campaign], ["utm_content", utm_content]]
             .forEach(([k, v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
