@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>沐閱｜前往賣貨便</title>
+  <title>沐閱｜前往蝦皮賣場</title>
 
   <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
@@ -167,7 +167,7 @@
       <div class="top">
         <div class="mark" aria-hidden="true"><div class="moon"></div></div>
         <div class="title">
-          <b>沐閱｜正在前往賣貨便</b>
+          <b>沐閱｜正在前往蝦皮賣場</b>
           <span>把你的點擊記錄好，然後安靜地帶你去下單。</span>
         </div>
       </div>
@@ -180,7 +180,7 @@
 
         <div class="actions">
           <a class="btn primary" id="goNow" href="#" rel="noopener noreferrer">立即前往</a>
-          <button class="btn" id="copyLink" type="button">複製賣貨便連結</button>
+          <button class="btn" id="copyLink" type="button">複製蝦皮連結</button>
         </div>
 
         <div class="pill mono" id="destPill" title=""></div>
@@ -192,7 +192,7 @@
   <script>
     // ========= 可調參數 =========
     const MEASUREMENT_ID = "G-35XNCDDN0B";
-    const DEFAULT_DEST = "https://myship.7-11.com.tw/general/detail/GM2601242672761";
+    const DEFAULT_DEST = "https://shopee.tw/zramj";
     const REDIRECT_DELAY_MS = 800;   // 等待多久再跳轉（給 GA 送事件的時間）
     const PROGRESS_TO = 92;          // 進度條停在幾%
 
@@ -265,7 +265,7 @@
       try {
         await navigator.clipboard.writeText(DEST);
         copyLink.textContent = "已複製 ✓";
-        setTimeout(() => (copyLink.textContent = "複製賣貨便連結"), 1200);
+        setTimeout(() => (copyLink.textContent = "複製蝦皮連結"), 1200);
       } catch {
         // 備援
         const input = document.createElement("input");
@@ -275,7 +275,7 @@
         document.execCommand("copy");
         document.body.removeChild(input);
         copyLink.textContent = "已複製 ✓";
-        setTimeout(() => (copyLink.textContent = "複製賣貨便連結"), 1200);
+        setTimeout(() => (copyLink.textContent = "複製蝦皮連結"), 1200);
       }
     });
 
@@ -284,7 +284,7 @@
       // 若 GA script 還沒載入，gtag 可能還在，但通常仍可 push 到 dataLayer
       if (typeof gtag !== "function") return;
 
-      gtag("event", "click_to_myship", {
+      gtag("event", "click_to_shopee", {
         utm_source,
         utm_medium,
         utm_campaign,

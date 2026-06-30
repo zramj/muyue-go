@@ -7,12 +7,12 @@
 
     <!-- SEO -->
     <title>沐閱 MUYUE｜閱讀系香氛蠟燭</title>
-    <meta name="description" content="沐閱 MUYUE｜手作香氛 × 閱讀儀式。香氛蠟燭與閱讀靜心時光。可在此訂閱電子報，獲得新品與開賣通知。" />
+    <meta name="description" content="沐閱 MUYUE｜手作香氛 × 閱讀儀式。為閱讀、夜晚和安靜時刻準備的香氣。可於蝦皮、賣貨便購買。" />
     <link rel="canonical" href="https://zramj.github.io/muyue-go/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="沐閱 MUYUE" />
     <meta property="og:title" content="沐閱 MUYUE｜閱讀系香氛蠟燭" />
-    <meta property="og:description" content="手作香氛 × 閱讀儀式。香氛蠟燭與閱讀靜心時光。訂閱電子報獲得新品與開賣通知。" />
+    <meta property="og:description" content="手作香氛 × 閱讀儀式。為閱讀、夜晚和安靜時刻準備的香氣。" />
     <meta property="og:url" content="https://zramj.github.io/muyue-go/" />
     <meta property="og:image" content="https://zramj.github.io/muyue-go/banner.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -24,6 +24,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/muyue-go/apple-touch-icon.png" />
     <link rel="manifest" href="/muyue-go/site.webmanifest" />
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+
     <!-- GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
     <script>
@@ -34,421 +39,967 @@
     </script>
 
     <style>
+        /* ===== 設計系統：暖調淺色主題 ===== */
         :root {
-            --bg1: #0b0f1a;
-            --bg2: #0f1627;
-            --stroke: rgba(255, 255, 255, .12);
-            --text: rgba(255, 255, 255, .92);
-            --muted: rgba(255, 255, 255, .68);
-            --muted2: rgba(255, 255, 255, .50);
-            --shadow: 0 18px 45px rgba(0, 0, 0, .35);
+            --bg-primary: #F5EDE3;
+            --bg-secondary: #EDE4D8;
+            --bg-warm-glow: rgba(180, 150, 110, .08);
+            --text: #3D2E1F;
+            --text-light: #5A4A3A;
+            --muted: #7A6B5D;
+            --muted2: #A69580;
+            --accent: #8B6F4E;
+            --accent-light: #B8956A;
+            --card-bg: rgba(255, 255, 255, .78);
+            --card-bg-solid: #FFFCF8;
+            --stroke: rgba(139, 111, 78, .12);
+            --stroke-hover: rgba(139, 111, 78, .25);
+            --shadow: 0 12px 40px rgba(139, 111, 78, .08);
+            --shadow-hover: 0 16px 50px rgba(139, 111, 78, .14);
             --radius: 22px;
+            --radius-sm: 14px;
+            --font-serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            --font-sans: "Noto Sans TC", ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
 
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            margin: 0;
-            min-height: 100vh;
-            padding: 22px;
-            font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            font-family: var(--font-sans);
+            font-weight: 300;
             color: var(--text);
+            background: var(--bg-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== 背景裝飾 ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background:
-                radial-gradient(1200px 700px at 20% 10%, rgba(160, 180, 255, .22), transparent 55%),
-                radial-gradient(900px 600px at 80% 20%, rgba(255, 220, 170, .10), transparent 60%),
-                linear-gradient(180deg, var(--bg1), var(--bg2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
+                radial-gradient(ellipse 900px 500px at 15% 10%, rgba(200, 170, 130, .18), transparent 60%),
+                radial-gradient(ellipse 700px 400px at 85% 80%, rgba(180, 150, 110, .12), transparent 55%),
+                radial-gradient(ellipse 500px 300px at 50% 50%, rgba(220, 200, 170, .06), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .wrap {
-            width: min(560px, 100%)
+        /* ===== 通用 ===== */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
 
-        .card {
-            border: 1px solid var(--stroke);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
-            backdrop-filter: blur(10px);
-            overflow: hidden;
+        section {
+            padding: 60px 0;
+            scroll-margin-top: 76px;
         }
 
-        .header {
-            padding: 22px 22px 16px;
-            border-bottom: 1px solid var(--stroke)
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 12px;
         }
 
-        .brand {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px
-        }
-
-        .avatar {
-            width: 76px;
-            height: 76px;
-            border-radius: 999px;
-            border: 1px solid var(--stroke);
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .22), rgba(255, 255, 255, .04));
-            display: grid;
-            place-items: center;
-            overflow: hidden;
-            flex: 0 0 auto;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .fallback {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            box-shadow: -10px 0 0 0 rgba(255, 255, 255, .88);
-            opacity: .95;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 18px;
-            letter-spacing: .6px
-        }
-
-        .bio {
-            margin: 8px 0 0;
+        .section-sub {
+            text-align: center;
             color: var(--muted);
             font-size: 14px;
-            line-height: 1.75
+            margin-bottom: 40px;
+            letter-spacing: .3px;
         }
 
-        .social-icons {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 40px;
+            opacity: .5;
         }
 
-        .icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, .14);
-            background: rgba(255, 255, 255, .06);
-            display: grid;
-            place-items: center;
-            transition: transform .14s ease, background .14s ease, border-color .14s ease;
+        /* ===== 滾動動畫 ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s ease;
         }
 
-        .icon-btn:hover {
-            transform: translateY(-1px) scale(1.04);
-            background: rgba(255, 255, 255, .10);
-            border-color: rgba(255, 255, 255, .22);
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .icon-btn img {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            opacity: .95;
+        /* ===== Header 導航列 ===== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 24px;
+            transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
         }
 
-        .body {
-            padding: 16px 22px 22px
+        .site-header.scrolled {
+            background: rgba(245, 237, 227, .88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 20px rgba(139, 111, 78, .06);
         }
 
-        .grid {
-            display: grid;
-            gap: 12px
-        }
-
-        /* Banner CTA */
-        .banner {
-            display: block;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, .14);
-            background: rgba(255, 255, 255, .06);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, .20);
-            transition: transform .14s ease, border-color .14s ease, background .14s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .banner:hover {
-            transform: translateY(-1px);
-            border-color: rgba(255, 255, 255, .22);
-            background: rgba(255, 255, 255, .08);
-        }
-
-        .banner img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            display: block;
-            background: linear-gradient(90deg, rgba(255, 255, 255, .12), rgba(160, 180, 255, .14));
-        }
-
-        .banner .banner-text {
-            padding: 12px 14px 14px;
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
             gap: 12px;
+            text-decoration: none;
+            color: var(--text);
         }
 
-        .banner .banner-text b {
-            font-size: 14px;
-            letter-spacing: .3px
+        .header-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--stroke);
         }
 
-        .banner .banner-text span {
-            font-size: 12px;
-            color: var(--muted)
+        .header-brand span {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        .chip {
-            padding: 8px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, .14);
-            background: rgba(0, 0, 0, .12);
-            font-size: 12px;
-            color: rgba(255, 255, 255, .82);
-            white-space: nowrap;
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .panel {
-            margin-top: 2px;
-            border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 18px;
-            padding: 14px;
-            background: rgba(0, 0, 0, .10);
-        }
-
-        .panel b {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 8px
-        }
-
-        .panel p {
-            margin: 0;
+        .header-nav a {
             color: var(--muted);
+            text-decoration: none;
             font-size: 13px;
-            line-height: 1.7
+            padding: 6px 14px;
+            border-radius: 999px;
+            transition: color .2s ease, background .2s ease;
+            letter-spacing: .3px;
         }
 
-        /* Benchmark embed */
-        .benchmark-embed {
-            margin-top: 10px;
-            border-radius: 14px;
+        .header-nav a:hover {
+            color: var(--text);
+            background: rgba(139, 111, 78, .06);
+        }
+
+        .social-icons-header {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--stroke);
+            background: rgba(255, 255, 255, .5);
+            display: grid;
+            place-items: center;
+            transition: transform .15s ease, background .15s ease, border-color .15s ease;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-1px) scale(1.05);
+            background: rgba(255, 255, 255, .9);
+            border-color: var(--stroke-hover);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== Hero 區塊 ===== */
+        .hero {
+            padding: 100px 0 40px;
+            text-align: center;
+        }
+
+        .hero-banner {
+            max-width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--stroke);
+            margin-bottom: 40px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            display: block;
+            transition: transform .6s ease;
+        }
+
+        .hero-banner:hover img {
+            transform: scale(1.02);
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+
+        .hero-tagline {
+            font-size: 16px;
+            color: var(--muted);
+            margin-bottom: 30px;
+            line-height: 1.8;
+            letter-spacing: .5px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: .5px;
+            transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+            box-shadow: 0 6px 20px rgba(139, 111, 78, .2);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 111, 78, .28);
+            background: #7A6042;
+        }
+
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform .2s ease;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ===== 購買通路區 ===== */
+        .channels {
+            background: rgba(255, 255, 255, .3);
+            border-top: 1px solid var(--stroke);
+            border-bottom: 1px solid var(--stroke);
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .channel-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            background: var(--card-bg);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .channel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--stroke-hover);
+        }
+
+        .channel-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 16px;
+            border: 1px solid var(--stroke);
+        }
+
+        .channel-icon.myship {
+            background: linear-gradient(135deg, rgba(255, 140, 0, .08), rgba(255, 180, 80, .12));
+        }
+
+        .channel-icon.shopee {
+            background: linear-gradient(135deg, rgba(238, 77, 45, .08), rgba(255, 120, 80, .10));
+        }
+
+        .channel-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .channel-card h3 {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: .5px;
+        }
+
+        .channel-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .channel-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--stroke);
+            background: rgba(139, 111, 78, .04);
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: .3px;
+        }
+
+        .channel-tag svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* ===== 產品展示區 ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            border-radius: var(--radius);
+            background: var(--card-bg);
+            border: 1px solid var(--stroke);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-img-wrap {
             overflow: hidden;
         }
 
-        .benchmark-embed iframe {
-            width: 100% !important;
-            border: 0 !important;
-            min-height: 240px;
+        .product-info {
+            padding: 16px;
+            text-align: center;
         }
 
-        .note {
-            margin-top: 10px;
+        .product-name-zh {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .product-name-en {
+            font-size: 11px;
             color: var(--muted2);
+            letter-spacing: .5px;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
             font-size: 12px;
+            color: var(--muted);
             line-height: 1.6;
         }
 
-        .mono {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        /* ===== 品牌故事區 ===== */
+        .story {
+            background: rgba(255, 255, 255, .2);
+            border-top: 1px solid var(--stroke);
+            border-bottom: 1px solid var(--stroke);
         }
 
-        /* Admin-only block */
+        .story-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .story-text h2 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .story-text p {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 2;
+            margin-bottom: 16px;
+            letter-spacing: .3px;
+        }
+
+        .story-text .story-signature {
+            font-family: var(--font-serif);
+            font-size: 14px;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .story-img {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+        }
+
+        .story-img img {
+            width: 100%;
+            display: block;
+            transition: transform .6s ease;
+        }
+
+        .story-img:hover img {
+            transform: scale(1.03);
+        }
+
+        /* ===== Footer ===== */
+        .site-footer {
+            padding: 40px 24px;
+            text-align: center;
+            border-top: 1px solid var(--stroke);
+        }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--muted2);
+            letter-spacing: .3px;
+        }
+
+        /* ===== Admin Debug ===== */
         .admin-only {
             display: none;
-            margin-top: 10px;
+            margin: 20px auto;
+            max-width: 960px;
+            padding: 0 24px;
         }
 
         .admin-box {
-            border: 1px dashed rgba(255, 255, 255, .20);
-            border-radius: 14px;
-            padding: 10px 12px;
-            background: rgba(0, 0, 0, .18);
-            color: rgba(255, 255, 255, .75);
+            border: 1px dashed var(--stroke-hover);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, .6);
+            color: var(--muted);
             font-size: 12px;
             line-height: 1.65;
         }
 
+        .admin-box b {
+            color: var(--text);
+        }
+
         .admin-box code {
-            color: rgba(255, 255, 255, .9)
+            color: var(--accent);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
-        /* Footer */
-        .site-footer {
-            margin-top: 10px;
-            padding: 14px 16px;
-            border-top: 1px solid rgba(255, 255, 255, .12);
-            color: rgba(255, 255, 255, .55);
-            font-size: 12px;
-            line-height: 1.6;
-            text-align: center;
+        /* ===== 響應式 ===== */
+        @media (max-width: 768px) {
+            .header-nav {
+                position: absolute;
+                top: 58px;
+                right: 24px;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                min-width: 136px;
+                padding: 10px;
+                border: 1px solid var(--stroke);
+                border-radius: var(--radius-sm);
+                background: rgba(255, 252, 248, .96);
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+            }
+
+            .header-nav a {
+                display: none;
+            }
+
+            .site-header.menu-open .header-nav {
+                display: flex;
+            }
+
+            .site-header.menu-open .header-nav a {
+                display: block;
+                padding: 9px 12px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-tagline {
+                font-size: 14px;
+            }
+
+            .channel-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .channel-card {
+                padding: 24px 20px;
+            }
+
+            .channel-icon {
+                width: 46px;
+                height: 46px;
+                margin-bottom: 12px;
+                border-radius: 14px;
+            }
+
+            .channel-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .channel-card p {
+                margin-bottom: 12px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .product-info {
+                padding: 12px;
+            }
+
+            .product-name-zh {
+                font-size: 14px;
+            }
+
+            .story-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .story-text h2 {
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            section {
+                padding: 45px 0;
+            }
         }
 
-        .site-footer a {
-            color: rgba(255, 255, 255, .65);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, .25);
+        @media (max-width: 420px) {
+            .hero {
+                padding: 80px 0 30px;
+            }
+
+            .section-sub {
+                margin-bottom: 30px;
+            }
+
+            .hero h1 {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+
+            .channel-grid {
+                gap: 14px;
+            }
+
+            .channel-card {
+                padding: 22px 18px;
+            }
+
+            .products-grid {
+                gap: 10px;
+            }
+
+            .product-name-zh {
+                font-size: 13px;
+            }
+
+            .product-desc {
+                display: none;
+            }
+
+            .social-icons-header {
+                gap: 4px;
+            }
+
+            .icon-btn {
+                width: 30px;
+                height: 30px;
+            }
+
+            .icon-btn svg {
+                width: 14px;
+                height: 14px;
+            }
         }
 
-        .site-footer a:hover {
-            color: rgba(255, 255, 255, .85);
-            border-bottom-color: rgba(255, 255, 255, .45);
+        /* ===== 手機版漢堡選單 ===== */
+        .mobile-menu-btn {
+            display: none;
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--stroke);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .5);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .social-icons-header {
+                display: none;
+            }
         }
     </style>
 
     <!-- Structured data -->
     <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"沐閱 MUYUE",
-    "url":"https://zramj.github.io/muyue-go/",
-    "sameAs":[
-      "https://www.instagram.com/mu.yue.art/",
-      "https://www.threads.net/@mu.yue.art"
-    ]
-  }
-  </script>
+    {
+        "@context":"https://schema.org",
+        "@type":"Organization",
+        "name":"沐閱 MUYUE",
+        "url":"https://zramj.github.io/muyue-go/",
+        "sameAs":[
+            "https://www.instagram.com/mu.yue.art/",
+            "https://www.threads.net/@mu.yue.art",
+            "https://www.facebook.com/profile.php?id=61586349880553",
+            "https://shopee.tw/zramj"
+        ]
+    }
+    </script>
 </head>
 
 <body>
-    <div class="wrap">
-        <div class="card">
-            <div class="header">
-                <div class="brand">
-                    <div class="avatar" id="avatar">
-                        <img id="avatarImg" alt="沐閱 MUYUE 品牌 Logo" />
-                        <div class="fallback" id="fallbackMoon" aria-hidden="true"></div>
-                    </div>
+    <!-- ===== Header ===== -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a class="header-brand" href="#">
+                <img class="header-logo" id="headerLogo" alt="沐閱 MUYUE" />
+                <span>沐閱 MUYUE</span>
+            </a>
 
-                    <div style="flex:1 1 auto;">
-                        <h1>沐閱 MUYUE</h1>
-                        <p class="bio">
-                            手作香氛 × 質感選物。<br />
-                            用香氣陪你翻頁。
-                        </p>
+            <div style="display:flex; align-items:center; gap:4px;">
+                <nav class="header-nav" aria-label="主要導覽">
+                    <a href="#products">香氛蠟燭</a>
+                    <a href="#channels">購買通路</a>
+                    <a href="#story">品牌故事</a>
+                </nav>
 
-                        <!-- Social icons -->
-                        <div class="social-icons" aria-label="社群連結">
-                            <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener"
-                                aria-label="Instagram">
-                                <img id="igIcon" alt="Instagram" />
-                            </a>
-                            <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener"
-                                aria-label="Facebook">
-                                <img id="fbIcon" alt="Facebook" />
-                            </a>
-                            <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener"
-                                aria-label="Threads">
-                                <img id="threadsIcon" alt="Threads" />
-                            </a>
-                            <a class="icon-btn" id="btnEmail" href="#" target="_blank" rel="noopener"
-                                aria-label="Email">
-                                <img id="emailIcon" alt="Email" />
-                            </a>
-                        </div>
-
-                        <!-- Admin-only info (only visible with ?admin=1) -->
-                        <div class="admin-only" id="adminOnly">
-                            <div class="admin-box">
-                                <div><b>Admin / Debug</b></div>
-                                <div>utm_source: <code id="dbg_source"></code></div>
-                                <div>utm_medium: <code id="dbg_medium"></code></div>
-                                <div>utm_campaign: <code id="dbg_campaign"></code></div>
-                                <div>utm_content: <code id="dbg_content"></code></div>
-                                <div style="margin-top:6px;">go_url: <code id="dbg_go"></code></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="body">
-                <div class="grid">
-                    <!-- Banner CTA: goes to go.html with carried UTM -->
-                    <a class="banner" id="btnBuy" href="#">
-                        <img id="bannerImg" alt="沐閱｜前往賣貨便下單" />
-                        <div class="banner-text">
-                            <div>
-                                <b>前往賣貨便下單</b><br />
-                                <span>6/10 前免運｜點這裡前往購買</span>
-                            </div>
-                            <div class="chip">立即前往</div>
-                        </div>
+                <div class="social-icons-header" aria-label="社群連結">
+                    <a class="icon-btn" id="btnIG" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
                     </a>
+                    <a class="icon-btn" id="btnFB" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--accent)"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a class="icon-btn" id="btnThreads" href="#" target="_blank" rel="noopener" aria-label="Threads">
+                        <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="m20.742 8.181l-1.63.433a.5.5 0 0 1 0-.11a7.88 7.88 0 0 0-.795-1.872a5.665 5.665 0 0 0-3.079-2.465a7.92 7.92 0 0 0-2.112-.392a8.382 8.382 0 0 0-1.59 0a6.912 6.912 0 0 0-2.365.664a5.463 5.463 0 0 0-2.324 2.213a7.576 7.576 0 0 0-.805 2.093c-.147.584-.245 1.18-.291 1.78c-.036.58-.036 1.162 0 1.741a11.58 11.58 0 0 0 .462 3.018a7.224 7.224 0 0 0 1.007 2.083a5.373 5.373 0 0 0 2.505 1.922c.62.238 1.27.387 1.932.443a9.648 9.648 0 0 0 1.941 0a6.037 6.037 0 0 0 2.174-.584a4.759 4.759 0 0 0 1.921-1.65a3.36 3.36 0 0 0 .463-2.958a2.766 2.766 0 0 0-1.107-1.52l-.352-.25c0 .13 0 .24-.05.351c-.1.622-.309 1.22-.614 1.771a3.654 3.654 0 0 1-2.656 1.902a4.576 4.576 0 0 1-2.213-.111a3.48 3.48 0 0 1-1.54-.895a2.898 2.898 0 0 1-.835-1.781a3.019 3.019 0 0 1 1.389-2.948a4.567 4.567 0 0 1 1.63-.644a9.468 9.468 0 0 1 1.77-.12c.455.01.909.05 1.359.12h.08v-.06a2.94 2.94 0 0 0-.382-1.077a1.902 1.902 0 0 0-1.258-.885a3.21 3.21 0 0 0-1.871 0a2.163 2.163 0 0 0-1.097.815l-.05.14l-1.379-.955a.614.614 0 0 0 .07-.101a3.914 3.914 0 0 1 2.456-1.56a4.86 4.86 0 0 1 2.545.111a3.512 3.512 0 0 1 2.153 1.831c.253.499.42 1.036.493 1.59c0 .211.05.423.07.634v.08l.413.202a5.32 5.32 0 0 1 1.69 1.338a4.589 4.589 0 0 1 1.007 2.012c.082.44.109.89.08 1.338a5.212 5.212 0 0 1-1.288 3.13a6.812 6.812 0 0 1-3.732 2.243c-1.229.273-2.495.33-3.743.17a8.522 8.522 0 0 1-2.757-.804a7.042 7.042 0 0 1-2.807-2.485a8.945 8.945 0 0 1-1.137-2.576a12.839 12.839 0 0 1-.392-2.012A16.702 16.702 0 0 1 4 11.764c0-.574 0-1.158.1-1.741c.077-.659.198-1.31.363-1.952c.207-.821.526-1.61.946-2.345a7.043 7.043 0 0 1 4.024-3.25a9.105 9.105 0 0 1 1.851-.412a11.208 11.208 0 0 1 2.395 0c.94.102 1.857.353 2.716.745a7.264 7.264 0 0 1 3.11 2.636c.54.826.948 1.733 1.207 2.686c.005.02.015.037.03.05m-5.665 4.025h-.07A8.338 8.338 0 0 0 14 12.065a9.392 9.392 0 0 0-1.067 0a4.617 4.617 0 0 0-1.177.16a2.013 2.013 0 0 0-.925.544a1.31 1.31 0 0 0 .11 1.952c.226.179.486.309.765.382a3.22 3.22 0 0 0 1.278.06c.291-.036.574-.124.835-.26c.389-.235.692-.587.865-1.007c.225-.54.357-1.116.392-1.7z"/></svg>
+                    </a>
+                    <a class="icon-btn" id="btnEmail" href="#" aria-label="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                    </a>
+                </div>
 
-                    <!-- Subscription -->
-                    <!-- <div class="panel">
-                        <b>訂閱電子報</b>
-                        <p>我會偶爾寄一封：香氣、閱讀、與專屬給你的第一手消息，偶爾還會有一點點小驚喜。</p>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="選單">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
-                        <div class="benchmark-embed" id="benchmarkSignup"> -->
-                    <!-- BEGIN: Benchmark Email Signup Form Code -->
-                    <!-- <script type="text/javascript" id="lbscript1782335"
-                                src="https://lb.benchmarkemail.com/tw/code/lbformnew.js?mFcQnoBFKMQmAh03orSng0itbgbM6uK5vE46FCn2NN0vrOHtv%252Fm1Tw%253D%253D"></script>
-                            <noscript>Please enable JavaScript <br />
-                                <div align="center"
-                                    style="padding-top:5px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">
-                                    <a href="https://www.benchmarkemail.com/email-marketing?utm_source=usersignupforms&utm_medium=customers&utm_campaign=usersignupforms"
-                                        target="_new"
-                                        style="text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#999999;">Email
-                                        Marketing</a>
-                                    by Benchmark
-                                </div>
-                            </noscript> -->
-                    <!-- END: Benchmark Email Signup Form Code -->
-                    <!-- </div> -->
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-banner fade-in">
+                <img id="bannerImg" alt="沐閱 MUYUE — 為閱讀、夜晚和安靜時刻準備的香氣" />
+            </div>
+            <h1 class="fade-in">沐閱 MUYUE</h1>
+            <p class="hero-tagline fade-in">手作香氛 × 閱讀儀式<br/>用香氣陪你翻頁，為安靜時刻而生</p>
+            <a class="hero-cta fade-in" href="#channels">
+                前往選購
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+        </div>
+    </section>
 
-                    <!-- <div class="note">送出後會依 Benchmark 表單設定顯示成功訊息或導頁。</div> -->
-                    <!-- </div> -->
+    <!-- ===== 購買通路 ===== -->
+    <section class="channels" id="channels">
+        <div class="container">
+            <h2 class="fade-in">購買通路</h2>
+            <p class="section-sub fade-in">選擇你喜歡的平台，把香氣帶回家</p>
 
-                    <!-- <div class="note">
-                <span class="mono">Tip：</span>IG / Threads 入口請貼入口頁（/）帶 UTM；EDM 請直接貼 go.html 帶 UTM。
-            </div> -->
+            <div class="channel-grid">
+                <a class="channel-card fade-in" id="btnMyship" href="#">
+                    <div class="channel-icon myship">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <h3>賣貨便</h3>
+                    <p>7-11 賣貨便取貨<br/>滿額免運費</p>
+                    <div class="channel-tag">
+                        立即前往
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </a>
+
+                <a class="channel-card fade-in" id="btnShopee" href="#">
+                    <div class="channel-icon shopee">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#EE4D2D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    </div>
+                    <h3>蝦皮賣場</h3>
+                    <p>蝦皮購物下單<br/>多元付款方式</p>
+                    <div class="channel-tag">
+                        立即前往
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 產品展示 ===== -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="fade-in">香氛蠟燭</h2>
+            <p class="section-sub fade-in">為閱讀、夜晚和安靜時刻準備的香氣</p>
+
+            <div class="products-grid">
+                <div class="product-card fade-in">
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg1" alt="海風翻頁" />
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name-zh">海風翻頁</div>
+                        <div class="product-name-en">Sea Breeze Pages</div>
+                        <div class="product-desc">海鹽與微風，像在海邊翻開一本書</div>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg2" alt="靜謐續章" />
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name-zh">靜謐續章</div>
+                        <div class="product-name-en">Quiet Afterword</div>
+                        <div class="product-desc">沉靜的木質尾韻，讀完最後一頁的餘韻</div>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg3" alt="晨露詩篇" />
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name-zh">晨露詩篇</div>
+                        <div class="product-name-en">Dewlight Verses</div>
+                        <div class="product-desc">清晨草地的溫柔，適合慢慢醒來的早晨</div>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg4" alt="日光手稿" />
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name-zh">日光手稿</div>
+                        <div class="product-name-en">Sunlit Manuscript</div>
+                        <div class="product-desc">暖陽灑落書頁，午後金色的靜謐時光</div>
+                    </div>
                 </div>
             </div>
-            <footer class="site-footer">
-                © <span id="y"></span> 沐閱 MUYUE. All rights reserved.
-            </footer>
-            <script>
-                document.getElementById('y').textContent = new Date().getFullYear();
-            </script>
+        </div>
+    </section>
+
+    <!-- ===== 品牌故事 ===== -->
+    <section class="story" id="story">
+        <div class="container">
+            <div class="story-layout">
+                <div class="story-text fade-in">
+                    <h2>關於沐閱</h2>
+                    <p>
+                        沐閱，始於一個安靜的夜晚。<br/>
+                        翻開書頁的那一刻，空氣中飄來若有似無的香氣——那是記憶裡最放鬆的瞬間。
+                    </p>
+                    <p>
+                        我們相信，閱讀不只是眼睛的事。<br/>
+                        當香氣與文字交疊，五感都安靜下來，<br/>
+                        那才是真正屬於自己的時光。
+                    </p>
+                    <p>
+                        每一款香氛蠟燭，都是為了某個閱讀場景而生——<br/>
+                        海邊翻頁的午後、深夜讀完最後一章的餘韻、清晨剛醒來翻開第一頁的溫柔。
+                    </p>
+                    <div class="story-signature">— 沐閱 MUYUE，用香氣陪你翻頁。</div>
+                </div>
+                <div class="story-img fade-in">
+                    <img id="storyImg" alt="沐閱品牌故事" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Admin Debug ===== -->
+    <div class="admin-only" id="adminOnly">
+        <div class="admin-box">
+            <div><b>Admin / Debug</b></div>
+            <div>utm_source: <code id="dbg_source"></code></div>
+            <div>utm_medium: <code id="dbg_medium"></code></div>
+            <div>utm_campaign: <code id="dbg_campaign"></code></div>
+            <div>utm_content: <code id="dbg_content"></code></div>
+            <div style="margin-top:6px;">go_myship: <code id="dbg_go"></code></div>
+            <div>go_shopee: <code id="dbg_shopee"></code></div>
         </div>
     </div>
 
-    <script>
-        // ========= 你只要改這裡（檔名放 repo 根目錄即可） =========
-        const LOGO_FILENAME = "logo-1.png";        // 例：logo.png / logo.jpg / logo.svg
-        const BANNER_FILENAME = "banner-1.png";    // 例：banner.jpg
-        const IG_ICON_FILENAME = "icon-instagram.svg";  // 例：icon-ig.png 或 icon-ig.svg
-        const THREADS_ICON_FILENAME = "icon-threads.svg"; // 例：icon-threads.png 或 icon-threads.svg
+    <!-- ===== Footer ===== -->
+    <footer class="site-footer">
+        <div class="footer-brand">沐閱 MUYUE</div>
+        <div class="footer-social" aria-label="社群連結">
+            <a class="icon-btn" id="btnIG2" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a class="icon-btn" id="btnFB2" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--accent)"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a class="icon-btn" id="btnThreads2" href="#" target="_blank" rel="noopener" aria-label="Threads">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="m20.742 8.181l-1.63.433a.5.5 0 0 1 0-.11a7.88 7.88 0 0 0-.795-1.872a5.665 5.665 0 0 0-3.079-2.465a7.92 7.92 0 0 0-2.112-.392a8.382 8.382 0 0 0-1.59 0a6.912 6.912 0 0 0-2.365.664a5.463 5.463 0 0 0-2.324 2.213a7.576 7.576 0 0 0-.805 2.093c-.147.584-.245 1.18-.291 1.78c-.036.58-.036 1.162 0 1.741a11.58 11.58 0 0 0 .462 3.018a7.224 7.224 0 0 0 1.007 2.083a5.373 5.373 0 0 0 2.505 1.922c.62.238 1.27.387 1.932.443a9.648 9.648 0 0 0 1.941 0a6.037 6.037 0 0 0 2.174-.584a4.759 4.759 0 0 0 1.921-1.65a3.36 3.36 0 0 0 .463-2.958a2.766 2.766 0 0 0-1.107-1.52l-.352-.25c0 .13 0 .24-.05.351c-.1.622-.309 1.22-.614 1.771a3.654 3.654 0 0 1-2.656 1.902a4.576 4.576 0 0 1-2.213-.111a3.48 3.48 0 0 1-1.54-.895a2.898 2.898 0 0 1-.835-1.781a3.019 3.019 0 0 1 1.389-2.948a4.567 4.567 0 0 1 1.63-.644a9.468 9.468 0 0 1 1.77-.12c.455.01.909.05 1.359.12h.08v-.06a2.94 2.94 0 0 0-.382-1.077a1.902 1.902 0 0 0-1.258-.885a3.21 3.21 0 0 0-1.871 0a2.163 2.163 0 0 0-1.097.815l-.05.14l-1.379-.955a.614.614 0 0 0 .07-.101a3.914 3.914 0 0 1 2.456-1.56a4.86 4.86 0 0 1 2.545.111a3.512 3.512 0 0 1 2.153 1.831c.253.499.42 1.036.493 1.59c0 .211.05.423.07.634v.08l.413.202a5.32 5.32 0 0 1 1.69 1.338a4.589 4.589 0 0 1 1.007 2.012c.082.44.109.89.08 1.338a5.212 5.212 0 0 1-1.288 3.13a6.812 6.812 0 0 1-3.732 2.243c-1.229.273-2.495.33-3.743.17a8.522 8.522 0 0 1-2.757-.804a7.042 7.042 0 0 1-2.807-2.485a8.945 8.945 0 0 1-1.137-2.576a12.839 12.839 0 0 1-.392-2.012A16.702 16.702 0 0 1 4 11.764c0-.574 0-1.158.1-1.741c.077-.659.198-1.31.363-1.952c.207-.821.526-1.61.946-2.345a7.043 7.043 0 0 1 4.024-3.25a9.105 9.105 0 0 1 1.851-.412a11.208 11.208 0 0 1 2.395 0c.94.102 1.857.353 2.716.745a7.264 7.264 0 0 1 3.11 2.636c.54.826.948 1.733 1.207 2.686c.005.02.015.037.03.05m-5.665 4.025h-.07A8.338 8.338 0 0 0 14 12.065a9.392 9.392 0 0 0-1.067 0a4.617 4.617 0 0 0-1.177.16a2.013 2.013 0 0 0-.925.544a1.31 1.31 0 0 0 .11 1.952c.226.179.486.309.765.382a3.22 3.22 0 0 0 1.278.06c.291-.036.574-.124.835-.26c.389-.235.692-.587.865-1.007c.225-.54.357-1.116.392-1.7z"/></svg>
+            </a>
+            <a class="icon-btn" id="btnEmail2" href="#" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            </a>
+        </div>
+        <div class="footer-copy">© <span id="y"></span> 沐閱 MUYUE. All rights reserved.</div>
+    </footer>
 
-        // ========= 固定設定 =========
+    <script>
+        // ========= 設定（你只要改這裡） =========
+        const LOGO_FILENAME = "logo-1.png";
+        const BANNER_FILENAME = "banner-1.png";
+        const PRODUCT_IMAGES = [
+            "product-sea-breeze.png",
+            "product-quiet-afterword.png",
+            "product-dewlight-verses.png",
+            "product-sunlit-manuscript.png"
+        ];
+
         const IG_URL = "https://www.instagram.com/mu.yue.art/";
         const THREADS_URL = "https://www.threads.net/@mu.yue.art";
-        const FB_URL = "https://www.facebook.com/profile.php?id=61586349880553"; // TODO：換成你的 Facebook 專頁網址
-        const FB_ICON_FILENAME = "icon-facebook.svg";
+        const FB_URL = "https://www.facebook.com/profile.php?id=61586349880553";
         const EMAIL_ADDRESS = "mu.yue.art@gmail.com";
-        const EMAIL_ICON_FILENAME = "icon-email.svg";
-        const GO_HTML = "https://zramj.github.io/muyue-go/go.html";
-
+        const GO_MYSHIP_HTML = "https://zramj.github.io/muyue-go/go.html";
+        const GO_SHOPEE_HTML = "https://zramj.github.io/muyue-go/go-shopee.html";
 
         // ========= 讀取入口參數 =========
         const qs = new URLSearchParams(location.search);
@@ -470,75 +1021,92 @@
             }
         }
 
-        // ========= 讀取入口 UTM（用來判斷 IG vs Threads） =========
+        // ========= 讀取入口 UTM =========
         const utm_source = qs.get("utm_source") || "(none)";
         const utm_medium = qs.get("utm_medium") || "(none)";
         const utm_campaign = qs.get("utm_campaign") || "(none)";
         const utm_content = qs.get("utm_content") || "(none)";
         const is_admin = qs.get("admin") === "1";
-        // Assets (auto apply by filename)
+
+        // ========= 圖片載入工具 =========
         const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
-        const setImg = (el, filename, fallbackSvg) => {
+        const setImg = (el, filename) => {
             if (!el || !filename) return;
             el.src = base + filename;
-            el.onerror = () => {
-                if (fallbackSvg) {
-                    el.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(fallbackSvg);
-                }
-            };
         };
 
         // Logo
-        const avatarImg = document.getElementById("avatarImg");
-        const moon = document.getElementById("fallbackMoon");
-        if (LOGO_FILENAME) {
-            setImg(avatarImg, LOGO_FILENAME, null);
-            avatarImg.style.display = "block";
-            moon.style.display = "none";
-        }
+        setImg(document.getElementById("headerLogo"), LOGO_FILENAME);
 
-        // Social links
-        const btnIG = document.getElementById("btnIG");
-        const btnFB = document.getElementById("btnFB");
-        const btnThreads = document.getElementById("btnThreads");
-        const btnEmail = document.getElementById("btnEmail");
-        btnIG.href = IG_URL;
-        if (btnFB) btnFB.href = FB_URL;
-        btnThreads.href = THREADS_URL;
-        if (btnEmail) btnEmail.href = "mailto:" + EMAIL_ADDRESS;
+        // Banner
+        setImg(document.getElementById("bannerImg"), BANNER_FILENAME);
 
-        // Social icons images (use files in repo root)
-        const envelopeSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-  <path d="M4.5 7.5h15v9a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-9Z" stroke="white" opacity=".92" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="m5.2 8.1 6.2 5a1 1 0 0 0 1.2 0l6.2-5" stroke="white" opacity=".92" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>`;
-        setImg(document.getElementById("igIcon"), IG_ICON_FILENAME, null);
-        setImg(document.getElementById("threadsIcon"), THREADS_ICON_FILENAME, null);
-        setImg(document.getElementById("fbIcon"), FB_ICON_FILENAME, null);
-        setImg(document.getElementById("emailIcon"), EMAIL_ICON_FILENAME, envelopeSvg);
+        // Story image (reuse logo)
+        setImg(document.getElementById("storyImg"), BANNER_FILENAME);
 
+        // Product images
+        PRODUCT_IMAGES.forEach((file, i) => {
+            setImg(document.getElementById("prodImg" + (i + 1)), file);
+        });
 
+        // Year
+        document.getElementById("y").textContent = new Date().getFullYear();
 
-        // Build go.html URL with carried UTM
-        const goUrl = new URL(GO_HTML);
-        [["utm_source", utm_source], ["utm_medium", utm_medium], ["utm_campaign", utm_campaign], ["utm_content", utm_content]]
-            .forEach(([k, v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
+        // ========= 社群連結 =========
+        const socialLinks = [
+            { ids: ["btnIG", "btnIG2"], url: IG_URL },
+            { ids: ["btnFB", "btnFB2"], url: FB_URL },
+            { ids: ["btnThreads", "btnThreads2"], url: THREADS_URL },
+            { ids: ["btnEmail", "btnEmail2"], url: "mailto:" + EMAIL_ADDRESS }
+        ];
+        socialLinks.forEach(({ ids, url }) => {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.href = url;
+            });
+        });
 
-        // Banner image & click target
-        setImg(document.getElementById("bannerImg"), BANNER_FILENAME, null);
+        // ========= 購買連結（帶 UTM） =========
+        const buildGoUrl = (baseUrl) => {
+            const goUrl = new URL(baseUrl);
+            [["utm_source", utm_source], ["utm_medium", utm_medium], ["utm_campaign", utm_campaign], ["utm_content", utm_content]]
+                .forEach(([k, v]) => { if (v && v !== "(none)") goUrl.searchParams.set(k, v); });
+            return goUrl.toString();
+        };
 
-        const btnBuy = document.getElementById("btnBuy");
-        btnBuy.href = goUrl.toString();
-        btnBuy.addEventListener("click", () => {
+        const myshipUrl = buildGoUrl(GO_MYSHIP_HTML);
+        const shopeeUrl = buildGoUrl(GO_SHOPEE_HTML);
+
+        // 賣貨便
+        const btnMyship = document.getElementById("btnMyship");
+        btnMyship.href = myshipUrl;
+        btnMyship.addEventListener("click", () => {
             if (typeof gtag === "function") {
                 gtag("event", "entry_click_buy", {
                     utm_source, utm_medium, utm_campaign, utm_content,
-                    destination: GO_HTML
+                    destination: GO_MYSHIP_HTML,
+                    channel: "myship"
                 });
             }
         }, { passive: true });
 
-        // Entry view event
+        // 蝦皮
+        const btnShopee = document.getElementById("btnShopee");
+        btnShopee.href = shopeeUrl;
+        btnShopee.addEventListener("click", () => {
+            if (typeof gtag === "function") {
+                gtag("event", "entry_click_shopee", {
+                    utm_source, utm_medium, utm_campaign, utm_content,
+                    destination: GO_SHOPEE_HTML,
+                    channel: "shopee"
+                });
+            }
+        }, { passive: true });
+
+        // Hero CTA → 捲到購買通路
+        // (handled by anchor link)
+
+        // ========= Entry view event =========
         if (typeof gtag === "function") {
             gtag("event", "entry_view", {
                 utm_source, utm_medium, utm_campaign, utm_content,
@@ -546,44 +1114,56 @@
             });
         }
 
-        // Admin-only block
+        // ========= Admin Debug =========
         if (is_admin) {
-            const adminOnly = document.getElementById("adminOnly");
-            adminOnly.style.display = "block";
+            document.getElementById("adminOnly").style.display = "block";
             document.getElementById("dbg_source").textContent = utm_source;
             document.getElementById("dbg_medium").textContent = utm_medium;
             document.getElementById("dbg_campaign").textContent = utm_campaign;
             document.getElementById("dbg_content").textContent = utm_content;
-            document.getElementById("dbg_go").textContent = goUrl.toString();
+            document.getElementById("dbg_go").textContent = myshipUrl;
+            document.getElementById("dbg_shopee").textContent = shopeeUrl;
         }
 
-        // Subscribe tracking
-        const signup = document.getElementById("benchmarkSignup");
-        if (signup) {
-            let fired = false;
-            signup.addEventListener("click", () => {
-                if (fired) return;
-                fired = true;
-                if (typeof gtag === "function") {
-                    gtag("event", "subscribe_form_interact", {
-                        utm_source, utm_medium, utm_campaign, utm_content,
-                        provider: "benchmarkemail"
-                    });
-                }
-            }, { passive: true });
+        // ========= Header 滾動效果 =========
+        const siteHeader = document.getElementById("siteHeader");
+        let lastScroll = 0;
+        window.addEventListener("scroll", () => {
+            const y = window.scrollY;
+            if (y > 40) {
+                siteHeader.classList.add("scrolled");
+            } else {
+                siteHeader.classList.remove("scrolled");
+            }
+            lastScroll = y;
+        }, { passive: true });
 
-            document.addEventListener("submit", (e) => {
-                const t = e.target;
-                if (t && signup.contains(t)) {
-                    if (typeof gtag === "function") {
-                        gtag("event", "subscribe_submit", {
-                            utm_source, utm_medium, utm_campaign, utm_content,
-                            provider: "benchmarkemail"
-                        });
-                    }
+        // ========= 滾動淡入動畫 =========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
                 }
-            }, true);
-        }
+            });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+        document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+        // ========= 手機選單 =========
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        mobileMenuBtn.setAttribute("aria-expanded", "false");
+        mobileMenuBtn.addEventListener("click", () => {
+            const isOpen = siteHeader.classList.toggle("menu-open");
+            mobileMenuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+
+        document.querySelectorAll(".header-nav a").forEach((link) => {
+            link.addEventListener("click", () => {
+                siteHeader.classList.remove("menu-open");
+                mobileMenuBtn.setAttribute("aria-expanded", "false");
+            });
+        });
     </script>
 </body>
 
