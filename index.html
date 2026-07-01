@@ -149,6 +149,20 @@
             transform: translateY(0);
         }
 
+        .page-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: var(--bg-primary);
+            transform: translateY(100%);
+            transition: transform .55s cubic-bezier(.72, 0, .18, 1);
+            pointer-events: none;
+        }
+
+        .page-transition.is-active {
+            transform: translateY(0);
+        }
+
         /* ===== Header 導航列 ===== */
         .site-header {
             position: fixed;
@@ -252,17 +266,57 @@
 
         /* ===== Hero 區塊 ===== */
         .hero {
-            padding: 100px 0 40px;
+            --hero-progress: 0;
+            min-height: 240vh;
+            padding: 0;
             text-align: center;
+            background:
+                radial-gradient(ellipse 900px 540px at calc(12% + var(--hero-progress) * 42%) calc(8% + var(--hero-progress) * 12%), rgba(126, 92, 57, calc(.34 - var(--hero-progress) * .22)), transparent 64%),
+                radial-gradient(ellipse 820px 520px at calc(86% - var(--hero-progress) * 48%) calc(82% - var(--hero-progress) * 34%), rgba(216, 188, 150, calc(.36 - var(--hero-progress) * .12)), transparent 62%),
+                radial-gradient(ellipse 900px 560px at calc(45% + var(--hero-progress) * 20%) calc(42% - var(--hero-progress) * 16%), rgba(255, 252, 247, calc(var(--hero-progress) * .72)), transparent 66%),
+                linear-gradient(145deg,
+                    rgb(calc(221 + var(--hero-progress) * 24), calc(202 + var(--hero-progress) * 34), calc(177 + var(--hero-progress) * 50)) 0%,
+                    rgb(calc(239 + var(--hero-progress) * 10), calc(226 + var(--hero-progress) * 14), calc(210 + var(--hero-progress) * 25)) 52%,
+                    rgb(calc(249 + var(--hero-progress) * 5), calc(244 + var(--hero-progress) * 8), calc(236 + var(--hero-progress) * 13)) 100%);
+            border-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-sticky {
+            min-height: 100vh;
+            position: sticky;
+            top: 0;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            padding: 78px 0 72px;
+        }
+
+        .hero-stage {
+            width: 100vw;
+            position: relative;
+            min-height: min(720px, calc(100vh - 150px));
+            display: grid;
+            place-items: center;
+            margin: 0 auto;
+        }
+
+        .hero .container {
+            max-width: none;
+            width: 100%;
+            padding: 0;
         }
 
         .hero-banner {
-            max-width: 100%;
-            border-radius: var(--radius);
+            width: 100vw;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--stroke);
-            margin-bottom: 40px;
+            box-shadow: none;
+            border: 0;
+            opacity: clamp(0, calc(1 - var(--hero-progress) * 2.1), 1);
+            transform: translateY(calc(var(--hero-progress) * -56px)) scale(calc(1 + (1 - var(--hero-progress)) * .03));
+            transition: transform .12s linear, opacity .12s linear;
         }
 
         .hero-banner img {
@@ -273,6 +327,23 @@
 
         .hero-banner:hover img {
             transform: scale(1.02);
+        }
+
+        .hero-copy {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            opacity: clamp(0, calc((var(--hero-progress) - .38) * 2.4), 1);
+            transform: translateY(calc((1 - var(--hero-progress)) * 34px));
+            transition: transform .12s linear, opacity .12s linear;
+            pointer-events: none;
+        }
+
+        .hero-copy-inner {
+            width: min(960px, 100%);
+            padding: 0 8px;
+            background: transparent;
         }
 
         .hero h1 {
@@ -306,10 +377,15 @@
             letter-spacing: .5px;
             transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
             box-shadow: 0 6px 20px rgba(139, 111, 78, .2);
+            position: absolute;
+            left: 50%;
+            bottom: 28px;
+            z-index: 3;
+            transform: translateX(-50%);
         }
 
         .hero-cta:hover {
-            transform: translateY(-2px);
+            transform: translateX(-50%) translateY(-2px);
             box-shadow: 0 10px 30px rgba(139, 111, 78, .28);
             background: #7A6042;
         }
@@ -326,8 +402,8 @@
 
         /* ===== 購買通路區 ===== */
         .channels {
-            background: rgba(255, 255, 255, .3);
-            border-top: 1px solid var(--stroke);
+            background: rgba(255, 252, 247, .72);
+            border-top: 0;
             border-bottom: 1px solid var(--stroke);
         }
 
@@ -377,9 +453,17 @@
             background: linear-gradient(135deg, rgba(238, 77, 45, .08), rgba(255, 120, 80, .10));
         }
 
-        .channel-icon svg {
+        .channel-icon svg,
+        .channel-icon img {
             width: 24px;
             height: 24px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .channel-icon.shopee img {
+            width: 30px;
+            height: 30px;
         }
 
         .channel-card h3 {
@@ -417,66 +501,130 @@
         }
 
         /* ===== 產品展示區 ===== */
-        .products-grid {
+        .products .container {
+            max-width: 1180px;
+        }
+
+        .products-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-feature {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: minmax(220px, .36fr) minmax(0, .64fr);
+            gap: 42px;
+            align-items: center;
+            min-height: 440px;
+            padding: 48px 0;
+            border-bottom: 1px solid var(--stroke);
+            color: var(--text);
+            text-decoration: none;
+            transition: transform .25s ease;
         }
 
-        .product-card {
-            border-radius: var(--radius);
-            background: var(--card-bg);
-            border: 1px solid var(--stroke);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform .25s ease, box-shadow .25s ease;
+        .product-feature:last-child {
+            border-bottom: 0;
         }
 
-        .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
+        .product-copy {
+            padding-right: 12px;
+        }
+
+        .product-index {
+            display: block;
+            margin-bottom: 18px;
+            color: var(--muted2);
+            font-size: 12px;
+            letter-spacing: .8px;
         }
 
         .product-img {
             width: 100%;
-            aspect-ratio: 1;
+            height: 100%;
+            min-height: 0;
             object-fit: cover;
             display: block;
             transition: transform .5s ease;
         }
 
-        .product-card:hover .product-img {
-            transform: scale(1.05);
+        .product-feature:hover .product-img {
+            transform: scale(1.035);
         }
 
         .product-img-wrap {
+            max-width: 100%;
+            width: min(100%, 560px);
+            height: clamp(380px, 58vh, 560px);
+            margin-left: auto;
+            border-radius: 18px;
             overflow: hidden;
-        }
-
-        .product-info {
-            padding: 16px;
-            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--stroke);
         }
 
         .product-name-zh {
             font-family: var(--font-serif);
-            font-size: 16px;
+            font-size: 30px;
             font-weight: 600;
             letter-spacing: 1px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .product-name-en {
-            font-size: 11px;
+            font-size: 13px;
             color: var(--muted2);
             letter-spacing: .5px;
-            margin-bottom: 8px;
+            margin-bottom: 18px;
         }
 
         .product-desc {
-            font-size: 12px;
+            max-width: 310px;
+            font-size: 15px;
             color: var(--muted);
-            line-height: 1.6;
+            line-height: 1.75;
+            margin-bottom: 34px;
+        }
+
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .product-tags a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 34px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .58);
+            border: 1px solid rgba(139, 111, 78, .09);
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease;
+        }
+
+        .product-tags a:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 252, 248, .88);
+            border-color: var(--stroke-hover);
+        }
+
+        .product-buy-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            display: block;
+            flex: 0 0 auto;
+        }
+
+        .product-buy-shopee .product-buy-icon {
+            width: 22px;
+            height: 22px;
         }
 
         /* ===== 品牌故事區 ===== */
@@ -621,6 +769,24 @@
                 text-align: center;
             }
 
+            .hero-sticky {
+                padding: 78px 0 76px;
+            }
+
+            .hero-stage {
+                width: 100vw;
+                min-height: calc(100vh - 156px);
+            }
+
+            .hero-banner {
+                min-height: 66svh;
+            }
+
+            .hero-banner img {
+                min-height: 66svh;
+                object-fit: cover;
+            }
+
             .hero h1 {
                 font-size: 24px;
             }
@@ -654,17 +820,37 @@
                 margin-bottom: 12px;
             }
 
-            .products-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 14px;
+            .product-feature {
+                grid-template-columns: 1fr;
+                gap: 22px;
+                min-height: 0;
+                padding: 34px 0;
             }
 
-            .product-info {
-                padding: 12px;
+            .product-copy {
+                padding-right: 0;
+            }
+
+            .product-img-wrap {
+                order: -1;
+                width: 100%;
+                height: auto;
+                margin-left: 0;
+                border-radius: 16px;
             }
 
             .product-name-zh {
+                font-size: 26px;
+            }
+
+            .product-desc {
+                max-width: none;
+                margin-bottom: 22px;
                 font-size: 14px;
+            }
+
+            .product-img {
+                aspect-ratio: 1;
             }
 
             .story-layout {
@@ -686,17 +872,21 @@
         }
 
         @media (max-width: 420px) {
-            .hero {
-                padding: 80px 0 30px;
-            }
-
             .section-sub {
                 margin-bottom: 30px;
+            }
+
+            .hero-cta {
+                bottom: 22px;
             }
 
             .hero h1 {
                 font-size: 20px;
                 letter-spacing: 2px;
+            }
+
+            .hero-copy h1 {
+                font-size: 30px;
             }
 
             .channel-grid {
@@ -707,16 +897,8 @@
                 padding: 22px 18px;
             }
 
-            .products-grid {
-                gap: 10px;
-            }
-
-            .product-name-zh {
-                font-size: 13px;
-            }
-
             .product-desc {
-                display: none;
+                display: block;
             }
 
             .social-icons-header {
@@ -821,16 +1003,24 @@
 
     <!-- ===== Hero ===== -->
     <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-banner fade-in">
-                <img id="bannerImg" alt="沐閱 MUYUE — 為閱讀、夜晚和安靜時刻準備的香氣" />
+        <div class="hero-sticky">
+            <div class="container">
+                <div class="hero-stage">
+                    <div class="hero-banner">
+                        <img id="bannerImg" alt="沐閱 MUYUE — 為閱讀、夜晚和安靜時刻準備的香氣" />
+                    </div>
+                    <div class="hero-copy">
+                        <div class="hero-copy-inner">
+                            <h1>沐閱 MUYUE</h1>
+                            <p class="hero-tagline">手作香氛 × 閱讀儀式<br/>用香氣陪你翻頁，為安靜時刻而生</p>
+                        </div>
+                    </div>
+                    <a class="hero-cta" href="#channels">
+                        前往選購
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </a>
+                </div>
             </div>
-            <h1 class="fade-in">沐閱 MUYUE</h1>
-            <p class="hero-tagline fade-in">手作香氛 × 閱讀儀式<br/>用香氣陪你翻頁，為安靜時刻而生</p>
-            <a class="hero-cta fade-in" href="#channels">
-                前往選購
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
         </div>
     </section>
 
@@ -841,10 +1031,10 @@
             <p class="section-sub fade-in">選擇你喜歡的平台，把香氣帶回家</p>
 
             <div class="channel-grid">
-                <a class="channel-card fade-in" id="btnMyship" href="#">
-                    <div class="channel-icon myship">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    </div>
+	                <a class="channel-card fade-in" id="btnMyship" href="#">
+	                    <div class="channel-icon myship">
+	                        <img src="icon-myship-cart.png" alt="" />
+	                    </div>
                     <h3>賣貨便</h3>
                     <p>7-11 賣貨便取貨<br/>滿額免運費</p>
                     <div class="channel-tag">
@@ -853,10 +1043,10 @@
                     </div>
                 </a>
 
-                <a class="channel-card fade-in" id="btnShopee" href="#">
-                    <div class="channel-icon shopee">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#EE4D2D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                    </div>
+	                <a class="channel-card fade-in" id="btnShopee" href="#">
+	                    <div class="channel-icon shopee">
+	                        <img src="icon-shopee.png" alt="" />
+	                    </div>
                     <h3>蝦皮賣場</h3>
                     <p>蝦皮購物下單<br/>多元付款方式</p>
                     <div class="channel-tag">
@@ -874,48 +1064,84 @@
             <h2 class="fade-in">香氛蠟燭</h2>
             <p class="section-sub fade-in">為閱讀、夜晚和安靜時刻準備的香氣</p>
 
-            <div class="products-grid">
-                <div class="product-card fade-in">
-                    <div class="product-img-wrap">
-                        <img class="product-img" id="prodImg1" alt="海風翻頁" />
+            <div class="products-list">
+                <div class="product-feature fade-in">
+                    <div class="product-copy">
+                        <span class="product-index">01</span>
+                        <div class="product-name-zh">四入試香包</div>
+                        <div class="product-name-en">Discovery Set</div>
+                        <div class="product-desc">四款香氣一次收藏，找到最適合你的閱讀時刻</div>
+                        <div class="product-tags">
+                            <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買四入試香包"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
+                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買四入試香包"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <div class="product-name-zh">海風翻頁</div>
-                        <div class="product-name-en">Sea Breeze Pages</div>
-                        <div class="product-desc">海鹽與微風，像在海邊翻開一本書</div>
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg1" alt="四入試香包" />
                     </div>
                 </div>
 
-                <div class="product-card fade-in">
-                    <div class="product-img-wrap">
-                        <img class="product-img" id="prodImg2" alt="靜謐續章" />
-                    </div>
-                    <div class="product-info">
-                        <div class="product-name-zh">靜謐續章</div>
-                        <div class="product-name-en">Quiet Afterword</div>
-                        <div class="product-desc">沉靜的木質尾韻，讀完最後一頁的餘韻</div>
-                    </div>
-                </div>
-
-                <div class="product-card fade-in">
-                    <div class="product-img-wrap">
-                        <img class="product-img" id="prodImg3" alt="晨露詩篇" />
-                    </div>
-                    <div class="product-info">
-                        <div class="product-name-zh">晨露詩篇</div>
-                        <div class="product-name-en">Dewlight Verses</div>
-                        <div class="product-desc">清晨草地的溫柔，適合慢慢醒來的早晨</div>
-                    </div>
-                </div>
-
-                <div class="product-card fade-in">
-                    <div class="product-img-wrap">
-                        <img class="product-img" id="prodImg4" alt="日光手稿" />
-                    </div>
-                    <div class="product-info">
+                <div class="product-feature fade-in" data-detail-href="product-sunlit-manuscript.html">
+                    <div class="product-copy">
+                        <span class="product-index">02</span>
                         <div class="product-name-zh">日光手稿</div>
                         <div class="product-name-en">Sunlit Manuscript</div>
                         <div class="product-desc">暖陽灑落書頁，午後金色的靜謐時光</div>
+                        <div class="product-tags">
+                            <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買日光手稿"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
+                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買日光手稿"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                        </div>
+                    </div>
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg2" alt="日光手稿" />
+                    </div>
+                </div>
+
+                <div class="product-feature fade-in" data-detail-href="product-dewlight-verses.html">
+                    <div class="product-copy">
+                        <span class="product-index">03</span>
+                        <div class="product-name-zh">晨露詩篇</div>
+                        <div class="product-name-en">Dewlight Verses</div>
+                        <div class="product-desc">清晨草地的溫柔，適合慢慢醒來的早晨</div>
+                        <div class="product-tags">
+                            <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買晨露詩篇"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
+                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買晨露詩篇"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                        </div>
+                    </div>
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg3" alt="晨露詩篇" />
+                    </div>
+                </div>
+
+                <div class="product-feature fade-in" data-detail-href="product-sea-breeze.html">
+                    <div class="product-copy">
+                        <span class="product-index">04</span>
+                        <div class="product-name-zh">海風翻頁</div>
+                        <div class="product-name-en">Sea Breeze Pages</div>
+                        <div class="product-desc">海鹽與微風，像在海邊翻開一本書</div>
+                        <div class="product-tags">
+                            <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買海風翻頁"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
+                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買海風翻頁"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                        </div>
+                    </div>
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg4" alt="海風翻頁" />
+                    </div>
+                </div>
+
+                <div class="product-feature fade-in" data-detail-href="product-quiet-afterword.html">
+                    <div class="product-copy">
+                        <span class="product-index">05</span>
+                        <div class="product-name-zh">靜謐續章</div>
+                        <div class="product-name-en">Quiet Afterword</div>
+                        <div class="product-desc">沉靜的木質尾韻，讀完最後一頁的餘韻</div>
+                        <div class="product-tags">
+                            <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買靜謐續章"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
+                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買靜謐續章"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                        </div>
+                    </div>
+                    <div class="product-img-wrap">
+                        <img class="product-img" id="prodImg5" alt="靜謐續章" />
                     </div>
                 </div>
             </div>
@@ -983,15 +1209,18 @@
         <div class="footer-copy">© <span id="y"></span> 沐閱 MUYUE. All rights reserved.</div>
     </footer>
 
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
     <script>
         // ========= 設定（你只要改這裡） =========
         const LOGO_FILENAME = "logo-1.png";
         const BANNER_FILENAME = "banner-1.png";
         const PRODUCT_IMAGES = [
-            "product-sea-breeze.png",
-            "product-quiet-afterword.png",
+            "product-sampler-set.png",
+            "product-sunlit-manuscript.png",
             "product-dewlight-verses.png",
-            "product-sunlit-manuscript.png"
+            "product-sea-breeze.png",
+            "product-quiet-afterword.png"
         ];
 
         const IG_URL = "https://www.instagram.com/mu.yue.art/";
@@ -1103,6 +1332,34 @@
             }
         }, { passive: true });
 
+        document.querySelectorAll(".product-buy-myship").forEach((link) => {
+            link.href = myshipUrl;
+            link.addEventListener("click", () => {
+                if (typeof gtag === "function") {
+                    gtag("event", "entry_click_buy", {
+                        utm_source, utm_medium, utm_campaign, utm_content,
+                        destination: GO_MYSHIP_HTML,
+                        channel: "myship",
+                        placement: "product_section"
+                    });
+                }
+            }, { passive: true });
+        });
+
+        document.querySelectorAll(".product-buy-shopee").forEach((link) => {
+            link.href = shopeeUrl;
+            link.addEventListener("click", () => {
+                if (typeof gtag === "function") {
+                    gtag("event", "entry_click_shopee", {
+                        utm_source, utm_medium, utm_campaign, utm_content,
+                        destination: GO_SHOPEE_HTML,
+                        channel: "shopee",
+                        placement: "product_section"
+                    });
+                }
+            }, { passive: true });
+        });
+
         // Hero CTA → 捲到購買通路
         // (handled by anchor link)
 
@@ -1127,7 +1384,17 @@
 
         // ========= Header 滾動效果 =========
         const siteHeader = document.getElementById("siteHeader");
+        const hero = document.getElementById("hero");
         let lastScroll = 0;
+        const updateHeroProgress = () => {
+            if (!hero) return;
+            const rect = hero.getBoundingClientRect();
+            const max = Math.max(1, rect.height - window.innerHeight);
+            const rawProgress = Math.min(1, Math.max(0, -rect.top / max));
+            const progress = Math.min(1, rawProgress / .72);
+            hero.style.setProperty("--hero-progress", progress.toFixed(3));
+        };
+
         window.addEventListener("scroll", () => {
             const y = window.scrollY;
             if (y > 40) {
@@ -1135,8 +1402,11 @@
             } else {
                 siteHeader.classList.remove("scrolled");
             }
+            updateHeroProgress();
             lastScroll = y;
         }, { passive: true });
+        window.addEventListener("resize", updateHeroProgress, { passive: true });
+        updateHeroProgress();
 
         // ========= 滾動淡入動畫 =========
         const observer = new IntersectionObserver((entries) => {
@@ -1149,6 +1419,24 @@
         }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
 
         document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+        // ========= 產品頁過渡 =========
+        const PRODUCT_LINKS_ENABLED = false;
+        const pageTransition = document.getElementById("pageTransition");
+        document.querySelectorAll(".product-link").forEach((link) => {
+            link.addEventListener("click", (event) => {
+                if (!PRODUCT_LINKS_ENABLED) {
+                    event.preventDefault();
+                    return;
+                }
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === "_blank") return;
+                event.preventDefault();
+                if (pageTransition) pageTransition.classList.add("is-active");
+                window.setTimeout(() => {
+                    window.location.href = link.href;
+                }, 420);
+            });
+        });
 
         // ========= 手機選單 =========
         const mobileMenuBtn = document.getElementById("mobileMenuBtn");
