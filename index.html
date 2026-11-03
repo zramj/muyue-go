@@ -234,6 +234,17 @@
             background: rgba(139, 111, 78, .06);
         }
 
+        @media (min-width: 769px) {
+            .site-header .header-nav a {
+                color: #101710;
+            }
+
+            .site-header .header-nav a:hover,
+            .site-header .header-nav a:active {
+                color: #080F09;
+            }
+        }
+
         .social-icons-header {
             display: flex;
             gap: 6px;
@@ -748,35 +759,7 @@
         /* ===== 響應式 ===== */
         @media (max-width: 768px) {
             .header-nav {
-                position: absolute;
-                top: 58px;
-                right: 24px;
                 display: none;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 4px;
-                min-width: 136px;
-                padding: 10px;
-                border: 1px solid var(--stroke);
-                border-radius: var(--radius-sm);
-                background: rgba(255, 252, 248, .96);
-                box-shadow: var(--shadow);
-                backdrop-filter: blur(14px);
-                -webkit-backdrop-filter: blur(14px);
-            }
-
-            .header-nav a {
-                display: none;
-            }
-
-            .site-header.menu-open .header-nav {
-                display: flex;
-            }
-
-            .site-header.menu-open .header-nav a {
-                display: block;
-                padding: 9px 12px;
-                text-align: center;
             }
 
             .hero-sticky {
@@ -957,6 +940,11 @@
             color: var(--text);
         }
 
+        /* 原生 modal 置於 top layer，不受 Header 毛玻璃的定位範圍影響。 */
+        .mobile-drawer {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: flex;
@@ -964,6 +952,137 @@
 
             .social-icons-header {
                 display: none;
+            }
+
+            .mobile-drawer {
+                position: fixed;
+                inset: 0 0 auto auto;
+                width: 74vw;
+                max-width: 360px;
+                height: 100vh;
+                height: 100dvh;
+                max-height: none;
+                margin: 0;
+                padding: calc(104px + env(safe-area-inset-top, 0px))
+                    calc(28px + env(safe-area-inset-right, 0px))
+                    calc(32px + env(safe-area-inset-bottom, 0px)) 28px;
+                border: 0;
+                border-left: 1px solid rgba(57, 72, 62, .08);
+                background: #EAECE5;
+                color: #39483E;
+                box-shadow: -8px 0 32px rgba(39, 51, 44, .10);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                transform: translateX(100%);
+                transition: transform 330ms cubic-bezier(.22, .61, .36, 1);
+            }
+
+            .mobile-drawer[open] {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .mobile-drawer.is-open {
+                transform: translateX(0);
+            }
+
+            .mobile-drawer::backdrop {
+                background: rgba(39, 51, 44, .30);
+                opacity: 0;
+                transition: opacity 330ms ease-out;
+            }
+
+            .mobile-drawer.is-open::backdrop {
+                opacity: 1;
+            }
+
+            .drawer-close-btn {
+                position: absolute;
+                top: calc(10px + env(safe-area-inset-top, 0px));
+                right: calc(17px + env(safe-area-inset-right, 0px));
+                display: grid;
+                place-items: center;
+                width: 48px;
+                height: 48px;
+                border: 0;
+                border-radius: 8px;
+                background: transparent;
+                color: #39483E;
+                cursor: pointer;
+            }
+
+            .drawer-close-btn svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .mobile-drawer .header-nav {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 24px;
+                gap: clamp(16px, 3.5dvh, 28px);
+            }
+
+            .mobile-drawer .header-nav a {
+                display: flex;
+                align-items: center;
+                min-height: 56px;
+                padding: 10px 0;
+                border-radius: 4px;
+                color: #39483E;
+                font-size: 21px;
+                line-height: 1.5;
+                text-align: left;
+                opacity: 0;
+                transform: translateX(8px);
+                transition: opacity 220ms ease-out, transform 220ms ease-out,
+                    color .2s ease, background .2s ease;
+            }
+
+            .mobile-drawer.is-open .header-nav a {
+                opacity: 1;
+                transform: translateX(0);
+                transition-delay: 70ms, 70ms, 0ms, 0ms;
+            }
+
+            .mobile-drawer.is-open .header-nav a:nth-child(2) {
+                transition-delay: 120ms, 120ms, 0ms, 0ms;
+            }
+
+            .mobile-drawer.is-open .header-nav a:nth-child(3) {
+                transition-delay: 170ms, 170ms, 0ms, 0ms;
+            }
+
+            .mobile-drawer .header-nav a:hover,
+            .drawer-close-btn:hover {
+                color: var(--text);
+                background: rgba(142, 120, 95, .08);
+            }
+
+            .mobile-menu-btn:focus-visible,
+            .drawer-close-btn:focus-visible,
+            .mobile-drawer .header-nav a:focus-visible {
+                outline: 2px solid #39483E;
+                outline-offset: 4px;
+            }
+        }
+
+        @supports ((backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px))) {
+            @media (max-width: 768px) {
+                .mobile-drawer {
+                    background: rgba(234, 236, 229, .92);
+                    backdrop-filter: blur(18px);
+                    -webkit-backdrop-filter: blur(18px);
+                }
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .mobile-drawer,
+            .mobile-drawer::backdrop,
+            .mobile-drawer .header-nav a {
+                transition: none;
             }
         }
     </style>
@@ -1016,12 +1135,19 @@
                     </a>
                 </div>
 
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="選單">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="開啟導覽選單" aria-controls="mobileDrawer" aria-haspopup="dialog" aria-expanded="false">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
             </div>
         </div>
     </header>
+
+    <dialog class="mobile-drawer" id="mobileDrawer" aria-label="主要導覽選單">
+        <button class="drawer-close-btn" id="drawerCloseBtn" type="button" aria-label="關閉導覽選單" autofocus>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+        <!-- 開啟時移入原本的 header-nav，保留唯一一組導覽及錨點。 -->
+    </dialog>
 
     <!-- ===== Hero ===== -->
     <section class="hero" id="hero">
@@ -1057,7 +1183,7 @@
             <div class="channel-grid">
 	                <a class="channel-card fade-in" id="btnPinkoi" href="https://www.pinkoi.com/store/mu-yue" target="_blank" rel="noopener noreferrer">
 	                    <div class="channel-icon pinkoi">
-	                        <img src="icon-pinkoi.svg" alt="" />
+	                        <img src="pinkoi-icon-navy-512.png" alt="" />
 	                    </div>
                     <h3>Pinkoi</h3>
                     <p>前往 Pinkoi 設計館<br/>探索沐閱香氛</p>
@@ -1465,17 +1591,91 @@
 
         // ========= 手機選單 =========
         const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-        mobileMenuBtn.setAttribute("aria-expanded", "false");
+        const mobileDrawer = document.getElementById("mobileDrawer");
+        const drawerCloseBtn = document.getElementById("drawerCloseBtn");
+        const headerNav = document.querySelector(".header-nav");
+        const navHome = headerNav.parentElement;
+        const navNextSibling = headerNav.nextElementSibling;
+        const mobileNavigation = window.matchMedia("(max-width: 768px)");
+        const reducedDrawerMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let savedRootOverflow = "";
+        let drawerCloseTimer;
+
+        const finishDrawerClose = () => {
+            if (!mobileDrawer.open) return;
+            window.clearTimeout(drawerCloseTimer);
+            mobileDrawer.classList.remove("is-open");
+            mobileDrawer.close();
+            navHome.insertBefore(headerNav, navNextSibling);
+            document.documentElement.style.overflow = savedRootOverflow;
+            mobileMenuBtn.setAttribute("aria-expanded", "false");
+            // 不重新定位頁面；包含錨點導覽時也保留瀏覽器的原生捲動。
+            const focusTarget = mobileNavigation.matches ? mobileMenuBtn : headerNav.querySelector("a");
+            focusTarget.focus({ preventScroll: true });
+        };
+
+        const closeDrawer = () => {
+            if (!mobileDrawer.open) return;
+            mobileDrawer.classList.remove("is-open");
+            if (reducedDrawerMotion.matches) {
+                finishDrawerClose();
+            } else {
+                // transitionend 之外保留備援，避免快速操作留下鎖定。
+                window.clearTimeout(drawerCloseTimer);
+                drawerCloseTimer = window.setTimeout(finishDrawerClose, 380);
+            }
+        };
+
         mobileMenuBtn.addEventListener("click", () => {
-            const isOpen = siteHeader.classList.toggle("menu-open");
-            mobileMenuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            if (!mobileNavigation.matches || mobileDrawer.open) return;
+            savedRootOverflow = document.documentElement.style.overflow;
+            // 不使用 body:fixed 或 scrollTo，不改動 Hero 的位置與進度。
+            document.documentElement.style.overflow = "hidden";
+            mobileDrawer.append(headerNav);
+            mobileDrawer.showModal();
+            mobileMenuBtn.setAttribute("aria-expanded", "true");
+            mobileDrawer.getBoundingClientRect();
+            mobileDrawer.classList.add("is-open");
+            drawerCloseBtn.focus({ preventScroll: true });
         });
 
-        document.querySelectorAll(".header-nav a").forEach((link) => {
-            link.addEventListener("click", () => {
-                siteHeader.classList.remove("menu-open");
-                mobileMenuBtn.setAttribute("aria-expanded", "false");
-            });
+        drawerCloseBtn.addEventListener("click", closeDrawer);
+        mobileDrawer.addEventListener("cancel", (event) => {
+            event.preventDefault();
+            closeDrawer();
+        });
+        mobileDrawer.addEventListener("keydown", (event) => {
+            if (event.key !== "Tab") return;
+            const lastLink = headerNav.lastElementChild;
+            if (event.shiftKey && document.activeElement === drawerCloseBtn) {
+                event.preventDefault();
+                lastLink.focus({ preventScroll: true });
+            } else if (!event.shiftKey && document.activeElement === lastLink) {
+                event.preventDefault();
+                drawerCloseBtn.focus({ preventScroll: true });
+            }
+        });
+        mobileDrawer.addEventListener("click", (event) => {
+            const rect = mobileDrawer.getBoundingClientRect();
+            if (event.target === mobileDrawer && event.clientX < rect.left) closeDrawer();
+        });
+        mobileDrawer.addEventListener("touchmove", (event) => {
+            // iOS 遮罩及無須捲動的 Drawer 上，滑動也不得傳到頁面。
+            if (event.touches.length !== 1) return;
+            const rect = mobileDrawer.getBoundingClientRect();
+            if (mobileDrawer.scrollHeight <= mobileDrawer.clientHeight ||
+                event.touches[0].clientX < rect.left) event.preventDefault();
+        }, { passive: false });
+        mobileDrawer.addEventListener("transitionend", (event) => {
+            if (event.target === mobileDrawer && event.propertyName === "transform" &&
+                !mobileDrawer.classList.contains("is-open")) finishDrawerClose();
+        });
+        mobileNavigation.addEventListener("change", (event) => {
+            if (!event.matches) finishDrawerClose();
+        });
+
+        headerNav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeDrawer);
         });
     </script>
 </body>
