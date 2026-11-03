@@ -29,13 +29,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
 
-    <!-- GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B"></script>
+    <!-- GA4：正式站沿用原資源；預覽僅在明確開啟除錯時傳送。 -->
     <script>
+        const analyticsDebug = new URLSearchParams(location.search).get("analytics_debug") === "1";
+        const analyticsProduction = location.origin === "https://zramj.github.io" && location.pathname.startsWith("/muyue-go/");
+        window["ga-disable-G-35XNCDDN0B"] = window["ga-disable-G-35XNCDDN0B"] === true || (!analyticsProduction && !analyticsDebug);
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-35XNCDDN0B', { anonymize_ip: true });
+        if (!window["ga-disable-G-35XNCDDN0B"]) {
+            gtag('js', new Date());
+            gtag('config', 'G-35XNCDDN0B', {
+                anonymize_ip: true,
+                ...(analyticsDebug ? { debug_mode: true } : {})
+            });
+            const analyticsScript = document.createElement("script");
+            analyticsScript.async = true;
+            analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-35XNCDDN0B";
+            document.head.appendChild(analyticsScript);
+        }
     </script>
 
     <style>
@@ -643,7 +654,11 @@
             flex: 0 0 auto;
         }
 
-        .product-buy-shopee .product-buy-icon {
+        .product-buy-pinkoi {
+            min-width: 111px;
+        }
+
+        .product-buy-pinkoi .product-buy-icon {
             width: 22px;
             height: 22px;
         }
@@ -1223,7 +1238,7 @@
                         <div class="product-desc">四款香氣一次收藏，找到最適合你的閱讀時刻</div>
                         <div class="product-tags">
                             <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買四入試香包"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
-                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買四入試香包"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                            <a class="product-buy-link product-buy-pinkoi" href="https://www.pinkoi.com/product/r3ZTKQrs" target="_blank" rel="noopener noreferrer" aria-label="前往 Pinkoi 查看四入試香包"><img class="product-buy-icon" src="pinkoi-icon-navy-512.png" alt="" />Pinkoi</a>
                         </div>
                     </div>
                     <div class="product-img-wrap">
@@ -1239,7 +1254,7 @@
                         <div class="product-desc">暖陽灑落書頁，午後金色的靜謐時光</div>
                         <div class="product-tags">
                             <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買日光手稿"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
-                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買日光手稿"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                            <a class="product-buy-link product-buy-pinkoi" href="https://www.pinkoi.com/product/PtqPP6nv" target="_blank" rel="noopener noreferrer" aria-label="前往 Pinkoi 查看日光手稿"><img class="product-buy-icon" src="pinkoi-icon-navy-512.png" alt="" />Pinkoi</a>
                         </div>
                     </div>
                     <div class="product-img-wrap">
@@ -1255,7 +1270,7 @@
                         <div class="product-desc">清晨草地的溫柔，適合慢慢醒來的早晨</div>
                         <div class="product-tags">
                             <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買晨露詩篇"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
-                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買晨露詩篇"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                            <a class="product-buy-link product-buy-pinkoi" href="https://www.pinkoi.com/product/AQVMSiU3" target="_blank" rel="noopener noreferrer" aria-label="前往 Pinkoi 查看晨露詩篇"><img class="product-buy-icon" src="pinkoi-icon-navy-512.png" alt="" />Pinkoi</a>
                         </div>
                     </div>
                     <div class="product-img-wrap">
@@ -1271,7 +1286,7 @@
                         <div class="product-desc">海鹽與微風，像在海邊翻開一本書</div>
                         <div class="product-tags">
                             <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買海風翻頁"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
-                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買海風翻頁"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                            <a class="product-buy-link product-buy-pinkoi" href="https://www.pinkoi.com/product/amepnguC" target="_blank" rel="noopener noreferrer" aria-label="前往 Pinkoi 查看海風翻頁"><img class="product-buy-icon" src="pinkoi-icon-navy-512.png" alt="" />Pinkoi</a>
                         </div>
                     </div>
                     <div class="product-img-wrap">
@@ -1287,7 +1302,7 @@
                         <div class="product-desc">沉靜的木質尾韻，讀完最後一頁的餘韻</div>
                         <div class="product-tags">
                             <a class="product-buy-link product-buy-myship" href="go.html" aria-label="前往賣貨便購買靜謐續章"><img class="product-buy-icon" src="icon-myship-cart.png" alt="" />賣貨便</a>
-                            <a class="product-buy-link product-buy-shopee" href="go-shopee.html" aria-label="前往蝦皮賣場購買靜謐續章"><img class="product-buy-icon" src="icon-shopee.png" alt="" />蝦皮賣場</a>
+                            <a class="product-buy-link product-buy-pinkoi" href="https://www.pinkoi.com/product/ZLZ26rSt" target="_blank" rel="noopener noreferrer" aria-label="前往 Pinkoi 查看靜謐續章"><img class="product-buy-icon" src="pinkoi-icon-navy-512.png" alt="" />Pinkoi</a>
                         </div>
                     </div>
                     <div class="product-img-wrap">
@@ -1465,7 +1480,10 @@
                 gtag("event", "entry_click_buy", {
                     utm_source, utm_medium, utm_campaign, utm_content,
                     destination: GO_MYSHIP_HTML,
-                    channel: "myship"
+                    channel: "myship",
+                    placement: "purchase_section",
+                    product_name: "all_products",
+                    link_url: btnMyship.href
                 });
             }
         }, { passive: true });
@@ -1478,7 +1496,10 @@
                 gtag("event", "entry_click_pinkoi", {
                     utm_source, utm_medium, utm_campaign, utm_content,
                     destination: PINKOI_URL,
-                    channel: "pinkoi"
+                    channel: "pinkoi",
+                    placement: "purchase_section",
+                    product_name: "all_products",
+                    link_url: btnPinkoi.href
                 });
             }
         }, { passive: true });
@@ -1491,21 +1512,24 @@
                         utm_source, utm_medium, utm_campaign, utm_content,
                         destination: GO_MYSHIP_HTML,
                         channel: "myship",
-                        placement: "product_section"
+                        placement: "product_section",
+                        product_name: link.closest(".product-feature").querySelector(".product-name-zh").textContent.trim(),
+                        link_url: link.href
                     });
                 }
             }, { passive: true });
         });
 
-        document.querySelectorAll(".product-buy-shopee").forEach((link) => {
-            link.href = shopeeUrl;
+        document.querySelectorAll(".product-buy-pinkoi").forEach((link) => {
             link.addEventListener("click", () => {
                 if (typeof gtag === "function") {
-                    gtag("event", "entry_click_shopee", {
+                    gtag("event", "entry_click_pinkoi", {
                         utm_source, utm_medium, utm_campaign, utm_content,
-                        destination: GO_SHOPEE_HTML,
-                        channel: "shopee",
-                        placement: "product_section"
+                        destination: link.href,
+                        channel: "pinkoi",
+                        placement: "product_section",
+                        product_name: link.closest(".product-feature").querySelector(".product-name-zh").textContent.trim(),
+                        link_url: link.href
                     });
                 }
             }, { passive: true });
